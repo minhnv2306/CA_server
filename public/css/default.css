@@ -1,0 +1,87 @@
+.delete {
+    margin-top: 8px;
+    margin-left: -15px;
+    font-size: 10px;
+}
+.width-200 {
+    width: 200px;
+}
+.border-hidden {
+    border-style: hidden;
+}
+.padding-left-0 {
+    padding-left: 0px;
+}
+.padding-left-80 {
+    padding-left: 80px;
+}
+table {
+    font-size: 16px;
+}
+.background-color-active {
+    background-color: #3c8dbc !important;
+}
+.background-red {
+    background-color: red;
+}
+.background-white {
+    background-color: white;
+}
+
+.main-footer{
+    display: none;
+}
+.font-size-17 {
+    font-size: 17px;
+}
+.padding-right-15 {
+    padding-right: 15px;
+}
+.padding-left-25 {
+    padding-left: 25px;
+}
+#addNew{
+    background: #1ABC9C;
+    font-size: 15px;
+    padding: 10px 15px;
+    font-weight: bold;
+    border: none;
+}
+#status_title{
+    font-size: 28px;
+    font-weight: bold;
+}
+.form-inline .input-group>.form-control{
+    width: 180px;
+}
+#DataTables_Table_0_wrapper{
+    margin-top: 15px;
+}
+
+fieldset
+{
+    border: 1px solid #ddd !important;
+    margin: 0;
+    xmin-width: 0;
+    padding: 10px;
+    position: relative;
+    border-radius:4px;
+    background-color:#f5f5f5;
+    padding-left:10px!important;
+    margin-top: 50px;
+}
+
+legend
+{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom: 0px;
+    width: 35%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 5px 5px 10px;
+    background-color: #ffffff;
+}
+.product-table {
+    border-color: white !important;
+}
