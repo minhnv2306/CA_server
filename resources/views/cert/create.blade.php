@@ -21,7 +21,7 @@
 
 
                                     <fieldset class="col-sm-12">
-                                        <legend>Customer information</legend>
+                                        <legend>Thong tin</legend>
                                         <div id="choose_product">
 
                                             <div class="row">

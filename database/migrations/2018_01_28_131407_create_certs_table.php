@@ -23,6 +23,9 @@ class CreateCertsTable extends Migration
             $table->string('date_create_id_cart')->nullable();
             $table->string('address')->nullable();
             $table->unsignedInteger('user_id');
+            $table->boolean('status')->default(true);
+            $table->timestamp('deleted_at')->nullable();
+            $table->unsignedInteger('deleted_id')->default(0);
             $table->rememberToken();
             $table->timestamps();
 

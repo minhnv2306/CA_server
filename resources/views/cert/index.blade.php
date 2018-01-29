@@ -26,7 +26,7 @@
                                     @endforeach
                                 </div>
                             @endif
-                            
+
                             @if(session()->has('messages'))
                                 <div class="alert alert-success alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -91,10 +91,9 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Customer name</th>
                                         <th>Customer email</th>
-                                        <th>Total money</th>
-                                        <th>Order status</th>
+                                        <th>Customer name</th>
+                                        <th>ID cart</th>
                                         <th>Payment status</th>
                                         <th>Create at</th>
                                         <th>Action</th>
@@ -104,13 +103,19 @@
                                     @foreach($certs as $cert)
                                     <tr>
                                         <td>{{$cert->id}}</td>
-                                        <td>{{$cert->content}}</td>
-                                        <td>Customer email</td>
-                                        <td>Total money</td>
-                                        <td>Order status</td>
+                                        <td>{{$cert->email}}</td>
+                                        <td>{{$cert->customer_name}}</td>
+                                        <td>{{$cert->id_cart}}</td>
                                         <td>Payment status</td>
-                                        <td>Create at</td>
-                                        <td>Action</td>
+                                        <td>{{$cert->created_at}}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-danger btn-xs"> <i class="fa fa-pencil"></i> Thu hoi
+                                            </a>
+                                            <a href="#" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Cap phat lai
+                                            </a>
+                                            <a href="#" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Cap phat lai
+                                            </a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                     </tbody>
