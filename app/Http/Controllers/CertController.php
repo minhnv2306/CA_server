@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cert;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
 use phpseclib\Crypt\RSA;
@@ -43,6 +44,22 @@ class CertController extends Controller
      */
     public function store(Request $request, Cert $cert)
     {
+
+        $now = Carbon::now();
+        $startDay = $now->year . '/' . $now->month . '/'. $now->day;
+        switch ($request->deadline) {
+            case 1:
+                $endYear = $now->year + 1;
+                break;
+            case 2:
+                $endYear = $now->year + 2;
+                break;
+            case 3:
+                $endYear = $now->year + 3;
+                break;
+        }
+
+        $endDay = $endYear . '/' . $now->month . '/'. $now->day;
         $CAPrivKey = new RSA();
         $CAPrivKey->loadKey(CertController::privateKey);
 
@@ -79,19 +96,20 @@ class CertController extends Controller
             $subject = new X509();
             $subject->setPublicKey($pubKeySubject);
             $subject->setDNProp('cn', $request->name);
-            $subject->setDNProp('state', $request->huyen);
+            $subject->setDNProp('state', $request->district);
             $subject->setDNProp('id-at-organizationName', $request->note);
-            $subject->setDNProp('countryname', $request->xa);
+            $subject->setDNProp('countryname', $request->ward);
             $subject->setDNProp('st', $request->city);
-            $subject->setDNProp('id-emailaddress', Auth::user()->email);
+            $subject->setDNProp('id-emailaddress', $request->email);
+            $subject->setDNProp('o', $request->organizationname);
 
             $issuer = new X509();
             $issuer->setPrivateKey($CAPrivKey);
             $issuer->setDN($CASubject);
 
             $x509 = new X509();
-            $x509->setStartDate('1/1/2018');
-            $x509->setEndDate('1/1/2019');
+            $x509->setStartDate($startDay);
+            $x509->setEndDate($endDay);
             $x509->setSerialNumber(chr(1));
 
 
@@ -113,6 +131,7 @@ class CertController extends Controller
         } catch (Exception $e) {
             dd($e);
             echo "Hay ket noi voi USB";
+            return redirect()->route('certs.index')->with('errors', 'Thêm thất bại');
         }
     }
 
@@ -122,9 +141,9 @@ class CertController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cert $cert)
     {
-        //
+        return view('cert.show', compact('cert'));
     }
 
     /**

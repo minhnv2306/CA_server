@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                Create new order
+                Tạo chứng thư số
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -21,13 +21,13 @@
 
 
                                     <fieldset class="col-sm-12">
-                                        <legend>Thong tin</legend>
+                                        <legend>Thông tin khách hàng</legend>
                                         <div id="choose_product">
 
                                             <div class="row">
                                                 <div class="form-group col-sm-12">
-                                                    <label for="email">Full name: </label>
-                                                    <input class="form-control" name="name">
+                                                    <label for="email">Họ và tên(*): </label>
+                                                    <input class="form-control" name="name" required>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -36,33 +36,45 @@
                                                     <input type="email" class="form-control" name="email">
                                                 </div>
                                                 <div class="form-group col-sm-6">
-                                                    <label for="email">Phone number:</label>
-                                                    <input type="text" class="form-control" name="phone_number">
+                                                    <label for="email">Số điện thoại:</label>
+                                                    <input type="number" class="form-control" name="phone_number">
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="form-group col-sm-4">
-                                                    <label for="email">Số chứng minh thư:</label>
-                                                    <input type="text" class="form-control" name="id_cart">
+                                                    <label for="email">Số chứng minh thư(*):</label>
+                                                    <input type="text" class="form-control" name="identification_card" required>
                                                 </div>
                                                 <div class="form-group col-sm-4">
-                                                    <label for="email">Ngày cấp:</label>
-                                                    <input type="text" class="form-control" name="date_create_id_cart">
+                                                    <label for="email">Ngày cấp(*):</label>
+                                                    <div class='input-group date' id='datetimepicker1'>
+                                                        <input type='text' class="form-control" name="date_create_id_cart" required/>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group col-sm-4">
-                                                    <label for="email">Nơi cấp:</label>
-                                                    <input type="text" class="form-control" id="where_create_id_cart">
+                                                    <label for="email">Nơi cấp(*):</label>
+                                                    <input type="text" class="form-control" id="where_create_id_cart" required>
                                                 </div>
                                             </div>
 
+                                            <div class="row">
+                                                <div class="form-group col-sm-12">
+                                                    <label for="email">Địa chỉ làm việc:</label>
+                                                    <input type="text" class="form-control" name="organizationname">
+                                                </div>
+                                            </div>
                                             <div class="row product">
                                                 <div class="col-sm-12">
+                                                    <label for="email">Quê quán:</label>
                                                     <table class="table table-responsive table-bordered">
                                                         <thead>
-                                                        <th>Category product</th>
-                                                        <th>Product</th>
-                                                        <th>Number</th>
+                                                        <th>Tỉnh</th>
+                                                        <th>Quận (Huyện)</th>
+                                                        <th>Xã (Phường/ Thị trấn)</th>
                                                         </thead>
                                                         <tbody id="body_files">
                                                         <tr class="tr_clone">
@@ -70,7 +82,7 @@
                                                                 <div class="form-group">
                                                                     <select class="js-example-basic-single"
                                                                             id="cate_product" style="width: 100%" name="tinh">
-                                                                        <option value="1">Hà Nội</option>
+                                                                        <option value="Hà Nội">Hà Nội</option>
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -79,9 +91,9 @@
                                                                 <div class="form-group" id="display_products">
                                                                     <div class="form-group">
                                                                         <select class="js-example-basic-single"
-                                                                                name="huyen" id="products1"
+                                                                                name="district" id="products1"
                                                                                 style="width: 100%">
-                                                                            <option value="45">Hoàng Mai</option>
+                                                                            <option value="Hoàng Văn Thụ">Hoàng Mai</option>
                                                                         </select>
                                                                     </div>
 
@@ -91,9 +103,9 @@
                                                                 <div class="form-group" id="display_products">
                                                                     <div class="form-group">
                                                                         <select class="js-example-basic-single"
-                                                                                name="xa" id="products1"
+                                                                                name="ward" id="products1"
                                                                                 style="width: 100%">
-                                                                            <option value="45">Hoàng Mai</option>
+                                                                            <option value="Hoàng Mai">Hoàng Mai</option>
                                                                         </select>
                                                                     </div>
 
@@ -112,15 +124,17 @@
                                     </fieldset>
 
                                     <fieldset class="col-sm-12">
-                                        <legend>Cert status</legend>
+                                        <legend>Thông tin chứng thư</legend>
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label for="sel1">Thời hạn</label>
-                                                    <select class="form-control" name="customer_id">
+                                                    <select class="form-control" name="deadline">
                                                         <option value=1> 1 năm
                                                         </option>
                                                         <option value=2> 2 năm
+                                                        </option>
+                                                        <option value=3> 3 năm
                                                         </option>
                                                     </select>
                                                 </div>
@@ -131,7 +145,7 @@
 
                                             <div class="col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="sel1">Note order</label>
+                                                    <label for="sel1">Ghi chú</label>
                                                     <textarea class="form-control" rows="5" name="note"></textarea>
                                                 </div>
                                             </div>
@@ -167,6 +181,11 @@
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format:'YYYY-MM-DD HH:mm:ss',
+                });
+            });
         });
     </script>
 @endsection

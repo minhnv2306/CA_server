@@ -62,7 +62,7 @@
     <link rel="stylesheet" type="text/css" href="http://cert.local/css/default.css">
     <link rel="stylesheet" type="text/css" href="http://cert.local/css/style.css">
     <link rel="stylesheet" type="text/css" href="http://cert.local/css/order.css">
-
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

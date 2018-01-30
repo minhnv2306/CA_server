@@ -19,24 +19,7 @@
 
                     <div class="box box-info">
                         <div class="box-header">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    @foreach ($errors->all() as $error)
-                                        {!! $error !!}<br/>
-                                    @endforeach
-                                </div>
-                            @endif
-
-                            @if(session()->has('messages'))
-                                <div class="alert alert-success alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                    <h4><i class="icon fa fa-check"></i> {{trans('news::category_index.alert')}}</h4>
-                                    {{session('messages')}}
-                                </div>
-                            @endif
                             <div class="row">
-
-
                                 <div class="col-sm-6 pull-left" id="status_title">
                                     Filter follow order&#039;s status
                                 </div>
@@ -55,11 +38,9 @@
 
                                 <div class="row dataTables_wrapper form-inline dt-bootstrap no-footer">
                                     <div class="col-md-6 pull-left">
-                                        <button data-status="0" class="btn btn-danger filterStatus">Canceled</button>
-                                        <button data-status="1" class="btn btn-warning filterStatus">Pending</button>
-                                        <button data-status="2" class="btn btn-info filterStatus">Shipping</button>
-                                        <button data-status="3" class="btn btn-success filterStatus">Complete</button>
-                                        <button data-status="5" class="btn btn-default filterStatus">View all</button>
+                                        <button data-status="0" class="btn btn-danger filterStatus">Hết hạn</button>
+                                        <button data-status="3" class="btn btn-success filterStatus">Còn giá trị</button>
+                                        <button data-status="5" class="btn btn-default filterStatus">Xem tất cả</button>
                                     </div>
 
                                     <div class="pull-right padding-right-15">
@@ -105,15 +86,21 @@
                                         <td>{{$cert->id}}</td>
                                         <td>{{$cert->email}}</td>
                                         <td>{{$cert->customer_name}}</td>
-                                        <td>{{$cert->id_cart}}</td>
-                                        <td>Payment status</td>
+                                        <td>{{$cert->identification_card}}</td>
+                                        <td>
+                                            @if($cert->status)
+                                                <span class="label label-success">Con han</span>
+                                            @else
+                                                <span class="label label-danger">Cancel</span>
+                                            @endif
+                                        </td>
                                         <td>{{$cert->created_at}}</td>
                                         <td>
+                                            <a href="{{route('certs.show', ['cert' => $cert->id])}}" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi tiet
+                                            </a>
+                                            <a href="#" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> Cap phat lai
+                                            </a>
                                             <a href="#" class="btn btn-danger btn-xs"> <i class="fa fa-pencil"></i> Thu hoi
-                                            </a>
-                                            <a href="#" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Cap phat lai
-                                            </a>
-                                            <a href="#" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Cap phat lai
                                             </a>
                                         </td>
                                     </tr>
@@ -172,4 +159,17 @@
             $('.js-example-basic-single').select2();
         });
     </script>
+
+    @if(session()->has('messages'))
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script>
+            toastr.success('Tạo chứng thư thành công');
+        </script>
+    @endif
+    @if(session()->has('errors'))
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script>
+            toastr.error('Tạo chứng thư thất bại');
+        </script>
+    @endif
 @endsection

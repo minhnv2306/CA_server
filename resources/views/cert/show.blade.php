@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                Detail order 202
+                Thông tin chứng thư số {{$cert->id}}
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -20,7 +20,7 @@
             <div class="col-sm-3">
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <h4 class="box-title">Over view</h4>
+                        <h4 class="box-title">Tổng quan</h4>
 
                         <div class="box-tools">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -42,64 +42,45 @@
                 <div class="box box-info tab-pane active" id="infomation">
                     <div class="box-header with-border padding-left-25">
                         <div class="row">
-                            <div class="box-info col-sm-6">
-                                <h3>Detail order</h3>
+                            <div class="box-info col-sm-12">
+                                <h3>Thông tin khách hàng</h3>
                                 <table class="table-striped" width="100%">
                                     <tr>
-                                        <td class="width-200">Detail order</td>
-                                        <td class="padding-left-0"><strong>#202</strong></td>
+                                        <td class="width-200">Họ và tên</td>
+                                        <td class="padding-left-0"><strong>{{$cert->customer_name}}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td class="width-200">Create at</td>
-                                        <td class="padding-left-0"><strong>2018-01-29 17:44:25</strong></td>
+                                        <td class="width-200">Email</td>
+                                        <td class="padding-left-0"><strong>{{$cert->email}}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td class="width-200">Payment</td>
-                                        <td class="padding-left-0"><strong>Unpay</strong></td>
+                                        <td class="width-200">Số điện thoại</td>
+                                        <td class="padding-left-0"><strong>{{$cert->phone_number}}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td class="width-200">Order status</td>
-                                        <td class="padding-left-0">
-                                            <span class="label label-warning">Pending</span>
-                                        </td>
+                                        <td class="width-200">Số chứng minh thư</td>
+                                        <td class="padding-left-0"><strong>{{$cert->identification_card}}</strong></td>
                                     </tr>
                                     <tr class="border-hidden">
-                                        <td class="width-200">Note</td>
-                                        <td class="padding-left-0"><strong>No note in this order </strong></td>
+                                        <td class="width-200">Ngày cấp</td>
+                                        <td class="padding-left-0"><strong>{{$cert->date_create_id_cart}} </strong></td>
                                     </tr>
 
                                     <tr class="border-hidden">
-                                        <td class="width-200">Total money</td>
-                                        <td class="padding-left-0"><strong>325,000 $</strong></td>
+                                        <td class="width-200">Địa chỉ</td>
+                                        <td class="padding-left-0"><strong>{{$cert->address}}</strong></td>
                                     </tr>
 
-                                </table>
-                            </div>
-                            <div class="box-info col-sm-6">
-                                <h3>Customer information</h3>
-                                <table class="table-striped" width="100%">
-                                    <tr class="border-hidden">
-                                        <td class="width-200">Customer name</td>
-                                        <td class="padding-left-0"><strong>test001</strong></td>
-                                    </tr>
-                                    <tr class="border-hidden">
-                                        <td class="width-200">Customer email</td>
-                                        <td class="padding-left-0"><strong>test001@gmail.com </strong></td>
-                                    </tr>
-                                    <tr class="border-hidden">
-                                        <td class="width-200">Phone number</td>
-                                        <td class="padding-left-0"><strong>01679481315 </strong></td>
-                                    </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="box-info col-sm-6">
-                                <h3>Billing information</h3>
+                            <div class="box-info col-sm-12">
+                                <h3>Thông tin chứng thư</h3>
                                 <table class="table-striped" width="100%">
                                     <tr>
-                                        <td class="width-200">Name</td>
-                                        <td class="padding-left-0"><strong>Lanhnt</strong></td>
+                                        <td class="width-200">Nội dung</td>
+                                        <td class="padding-left-0"><strong>{{$cert->content}}</strong></td>
                                     </tr>
                                     <tr>
                                         <td class="width-200">Phone</td>
@@ -108,33 +89,6 @@
                                     <tr>
                                         <td class="width-200">Address</td>
                                         <td class="padding-left-0"><strong>235 Nguyễn Ngọc Nại</strong></td>
-                                    </tr>
-
-                                </table>
-                            </div>
-
-                            <div class="box-info col-sm-6">
-                                <h3>Shipping information</h3>
-                                <table class="table-striped" width="100%">
-                                    <tr>
-                                        <td class="width-200">Name</td>
-                                        <td class="padding-left-0"><strong></strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="width-200">Phone</td>
-                                        <td class="padding-left-0"><strong></strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="width-200">Address</td>
-                                        <td class="padding-left-0"><strong></strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="width-200">Date shipping</td>
-                                        <td class="padding-left-0"><strong>0000-00-00 00:00:00</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="width-200">Note</td>
-                                        <td class="padding-left-0"><strong></strong></td>
                                     </tr>
 
                                 </table>
@@ -150,46 +104,12 @@
                     </div>
                     <div class="box-body">
                         <div class="col-sm-12">
-                            <h3 class="box-title">Items ordered</h3>
-                            <!-- /.box-header -->
-                            <div class="table-responsive">
-                                <table class="table no-margin">
-                                    <thead>
-                                    <tr>
-                                        <th>Item ID</th>
-                                        <th>Name</th>
-                                        <th>Unit price</th>
-                                        <th>Number</th>
-                                        <th>Total money</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>61</td>
-                                        <td>BIO N/HOA HONG SUA ONG CHUA+ATP 100ML NO MIT</td>
-                                        <td>325,000 $</td>
-                                        <td>1</td>
-                                        <td>325,000 $</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                             <div class="box-info col-md-12" style="margin-top: 30px;">
 
                                 <div class="row" id="process-bar">
-                                    <div class="col-md-4 col-md-offset-1 status">
+                                    <div class="col-sm-offset-5 col-md-4 status">
                                         <div class="circle background-color-active"><i class="fa fa-refresh fa-spin pending"></i></div>
-                                        <div class="line"></div>
-                                        <div class="progress">Pending</div>
-                                    </div>
-                                    <div class="col-md-4 status">
-                                        <div class="circle background-white"></div>
-                                        <div class="line"></div>
-                                        <div class="progress">Shipping</div>
-                                    </div>
-                                    <div class="col-md-1 status">
-                                        <div class="circle"></div>
-                                        <div class="progress">Complete</div>
+                                        <div class="progress">Còn giá trị</div>
                                     </div>
                                 </div>
                             </div>
@@ -207,18 +127,19 @@
                                             <div class="row">
                                                 <div class="form-group col-sm-6">
                                                     <label for="sel1">Payment status</label>
-                                                    <select class="form-control" name="payment_status">
-                                                        <option value="0">Unpay</option>
-                                                        <option value="1">Pay</option>
-                                                    </select>
+                                                    @if($cert->status)
+                                                        <select class="form-control" name="payment_status">
+                                                            <option value="1">Còn hạn sử dụng</option>
+                                                            <option value="0">Thu hồi</option>
+                                                        </select>
+                                                    @else
+                                                        <select class="form-control" name="payment_status">
+                                                            <option value="0">Thu hồi</option>
+                                                            <option value="1">Còn hạn sử dụng</option>
+                                                        </select>
+                                                    @endif
                                                 </div>
 
-                                                <div class="form-group col-sm-6">
-                                                    <label for="sel1">Order status</label>
-
-                                                    <select class="form-control" name="order_status"><option value="0">Canceled</option><option value="1" selected="selected">Pending</option><option value="2">Shipping</option><option value="3">Complete</option></select>
-
-                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12">
