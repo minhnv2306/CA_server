@@ -122,18 +122,20 @@
                                     <!-- /.box-header -->
                                     <!-- form start -->
 
-                                    <form method="POST" action="http://wipro-crm.local/order/orders/202" accept-charset="UTF-8"><input name="_method" type="hidden" value="PUT"><input name="_token" type="hidden" value="yVck25i82fPLzQWroviAkorMRcP5EOxS9JLsFLwT">
+                                    <form method="POST" action="{{route('cert.update')}}">
+                                        {!! csrf_field() !!}
+                                        <input type="hidden" name="id" value="{{$cert->id}}">
                                         <div class="box-body">
                                             <div class="row">
                                                 <div class="form-group col-sm-6">
                                                     <label for="sel1">Payment status</label>
                                                     @if($cert->status)
-                                                        <select class="form-control" name="payment_status">
+                                                        <select class="form-control" name="status">
                                                             <option value="1">Còn hạn sử dụng</option>
                                                             <option value="0">Thu hồi</option>
                                                         </select>
                                                     @else
-                                                        <select class="form-control" name="payment_status">
+                                                        <select class="form-control" name="status">
                                                             <option value="0">Thu hồi</option>
                                                             <option value="1">Còn hạn sử dụng</option>
                                                         </select>
@@ -155,7 +157,6 @@
                                     </form>
                                     <!-- /.box-body -->
                                     <!-- /.box -->
-
                                 </div>
                             </div>
                         </div>
@@ -189,13 +190,19 @@
 @endsection
 @section('scripts')
     @parent
-    <script src="{{asset('/js/category.js')}}"></script>
-    <script src="{{asset('/js/order/add_product.js')}}"></script>
-    <script src="{{asset('/js/order/delete_product.js')}}"></script>
-    <script src="{{asset('/js/order/total_money.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
         });
     </script>
+    @if(session()->has('messages'))
+        <script>
+            toastr.success('{{session('messages')}}');
+        </script>
+    @endif
+    @if(session()->has('errors'))
+        <script>
+            toastr.error('{{session('errors')}}');
+        </script>
+    @endif
 @endsection

@@ -22,25 +22,25 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="https://www.w3schools.com/bootstrap/img_avatar3.png" class="user-image">
+                        <img src="/img/avatar.png" class="user-image">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">admin</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="https://www.w3schools.com/bootstrap/img_avatar3.png" class="img-circle"
+                            <img src="/img/avatar.png" class="img-circle"
                                  alt="User Image">
 
                             <p>
                                 admin@admin.com
-                                <small>Member since 01/1970</small>
+                                <small>Thành viên từ 01/1970</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="http://wipro.crm.admin.paditech.com/admin/user/1/change_information" class="btn btn-default btn-flat">Change user infomation</a>
+                                <a href="#" class="btn btn-default btn-flat">Change user infomation</a>
                             </div>
                             <div class="pull-right">
                                 <form method="POST" action="/logout">

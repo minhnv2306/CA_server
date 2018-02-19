@@ -6,9 +6,9 @@
                 Tạo chứng thư số
             </h1>
             <ol class="breadcrumb">
-                <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="http://wipro-crm.local/news/news_category"> Order</a></li>
-                <li class="active">Create new order</li>
+                <li><a href="/"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+                <li><a href="{{route('certs.index')}}"> Chứng thư số</a></li>
+                <li class="active">Tạo</li>
             </ol>
         </section>
         <section class="content">
@@ -18,8 +18,6 @@
                         <div class="col-sm-12">
                             <form id="form_cat_add" class="form-add-news-category" method="post" action="{{route('certs.store')}}">
                                 <div class="box-body">
-
-
                                     <fieldset class="col-sm-12">
                                         <legend>Thông tin khách hàng</legend>
                                         <div id="choose_product">
@@ -174,10 +172,6 @@
 @endsection
 @section('scripts')
     @parent
-    <script src="{{asset('/js/category.js')}}"></script>
-    <script src="{{asset('/js/order/add_product.js')}}"></script>
-    <script src="{{asset('/js/order/delete_product.js')}}"></script>
-    <script src="{{asset('/js/order/total_money.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();

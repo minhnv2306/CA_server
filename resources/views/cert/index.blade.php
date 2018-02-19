@@ -3,12 +3,12 @@
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                Order manager
+                Quản lý chứng thư
             </h1>
             <ol class="breadcrumb">
-                <li><a href="http://cert.local/admin"><i class="fa fa-dashboard"></i> Home</a>
+                <li><a href="http://cert.local/admin"><i class="fa fa-dashboard"></i> Trang chủ</a>
                 </li>
-                <li class="active">Order manager</li>
+                <li class="active">Quản lý chứng thư</li>
             </ol>
         </section>
         <section class="content">
@@ -21,13 +21,13 @@
                         <div class="box-header">
                             <div class="row">
                                 <div class="col-sm-6 pull-left" id="status_title">
-                                    Filter follow order&#039;s status
+                                    Lọc chứng thư theo trạng thái
                                 </div>
 
                                 <div class="pull-right padding-right-15">
                                     <a class="btn btn-primary" id="addNew"
                                        href="{{route('certs.create')}}">
-                                        <i class="fa fa-plus"></i> Create new order
+                                        <i class="fa fa-plus"></i> Tạo chứng thư mới
                                     </a>
                                 </div>
                             </div>
@@ -39,8 +39,8 @@
                                 <div class="row dataTables_wrapper form-inline dt-bootstrap no-footer">
                                     <div class="col-md-6 pull-left">
                                         <button data-status="0" class="btn btn-danger filterStatus">Hết hạn</button>
-                                        <button data-status="3" class="btn btn-success filterStatus">Còn giá trị</button>
-                                        <button data-status="5" class="btn btn-default filterStatus">Xem tất cả</button>
+                                        <button data-status="1" class="btn btn-success filterStatus">Còn giá trị</button>
+                                        <button data-status="2" class="btn btn-default filterStatus">Xem tất cả</button>
                                     </div>
 
                                     <div class="pull-right padding-right-15">
@@ -67,17 +67,17 @@
                                         </form>
                                     </div>
                                 </div>
-                                <table id="listOrder"
+                                <table id="list-cert"
                                        class="table no-margin data_table table table-bordered table-striped ">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Customer email</th>
-                                        <th>Customer name</th>
-                                        <th>ID cart</th>
-                                        <th>Payment status</th>
-                                        <th>Create at</th>
-                                        <th>Action</th>
+                                        <th>Email</th>
+                                        <th>Họ va tên</th>
+                                        <th>Số chứng minh thư</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Hành động</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -89,18 +89,18 @@
                                         <td>{{$cert->identification_card}}</td>
                                         <td>
                                             @if($cert->status)
-                                                <span class="label label-success">Con han</span>
+                                                <span class="label label-success">Còn hạn</span>
                                             @else
-                                                <span class="label label-danger">Cancel</span>
+                                                <span class="label label-danger">Hết hạn</span>
                                             @endif
                                         </td>
                                         <td>{{$cert->created_at}}</td>
                                         <td>
-                                            <a href="{{route('certs.show', ['cert' => $cert->id])}}" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi tiet
+                                            <a href="{{route('certs.show', ['cert' => $cert->id])}}" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi tiết
                                             </a>
-                                            <a href="#" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> Cap phat lai
+                                            <a href="#" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> Cấp phát lại
                                             </a>
-                                            <a href="#" class="btn btn-danger btn-xs"> <i class="fa fa-pencil"></i> Thu hoi
+                                            <a href="#" class="btn btn-danger btn-xs"> <i class="fa fa-pencil"></i> Thu hồi
                                             </a>
                                         </td>
                                     </tr>
@@ -123,37 +123,48 @@
 @section('scripts')
     @parent
     <script>
-        function myFunction() {
-            var x = document.getElementById("cate_product").value;
-            console.log(x);
+        $(document).ready(function () {
+            var statusBtn = [
+                '<span class="label label-danger">Hết hạn</span>',
+                '<span class="label label-success">Còn hạn</span>',
+            ];
+            $('.filterStatus').click(function () {
+                var status = $(this).attr('data-status');
+                $.ajax({
+                    url: 'certs/filter-status/' + status,
+                    type: 'GET',
+                    beforeSend: function () {
+                        $('#list-cert').waitMe({
+                            effect: 'bounce',
+                            text: '',
+                            bg: 'rgba(255,255,255,0.7)',
+                            color: '#000'
+                        });
+                    },
+                    success: function (result, status) {
+                        $('#list-cert').waitMe('hide');
+                        var datatable = $('#list-cert').DataTable();
+                        datatable.clear().draw();
+                        var dataTable = []
 
-            $.ajax({
-                url: '/order/products',
-                type: 'POST',
-                data: {
-                    cate_id: x,
-                    _token: $('meta').attr('name', 'csrf-token').val()
-                },
-                beforeSend: function () {
-                    $('#display_products').waitMe({
-                        effect: 'bounce',
-                        text: '',
-                        bg: 'rgba(255,255,255,0.7)',
-                        color: '#000'
-                    });
-                },
-                success: function (data, status) {
-                    $('#display_products').waitMe('hide');
-                    $('#products1').html('');
-                    $('#products1').append(data);
-                }
+                        result.forEach(function (data) {
+                            data.status = statusBtn[data.status];
+                            data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
+                                + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ' +
+                                '<a href="/certs/' + data.id + '" id="edit" class="btn btn-warning btn-xs">'
+                                + ' <i class="fa fa-pencil"> Cấp phát lại </i> </a> ' +
+                                '<a href="/certs/' + data.id + '" id="edit" class="btn btn-danger btn-xs">'
+                                + ' <i class="fa fa-pencil"> Thu hồi </i> </a> ' ;
+                            dataTable.push(Object.values(data));
+                        });
+                        datatable.rows.add(dataTable); // Add data to datatable, array
+                        datatable.columns.adjust().draw(); // Redraw the DataTable
+                        datatable.order([0, 'desc']).draw();
+                    }
+                })
             })
-        }
+        })
     </script>
-    <script src="{{asset('/js/category.js')}}"></script>
-    <script src="{{asset('/js/order/add_product.js')}}"></script>
-    <script src="{{asset('/js/order/delete_product.js')}}"></script>
-    <script src="{{asset('/js/order/total_money.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
@@ -161,13 +172,11 @@
     </script>
 
     @if(session()->has('messages'))
-        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script>
             toastr.success('Tạo chứng thư thành công');
         </script>
     @endif
     @if(session()->has('errors'))
-        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script>
             toastr.error('Tạo chứng thư thất bại');
         </script>

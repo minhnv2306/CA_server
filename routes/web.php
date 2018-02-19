@@ -18,6 +18,8 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('certs', 'CertController');
+    Route::get('certs/filter-status/{status}', 'CertController@getListByStatus');
+    Route::post('cert/update', 'CertController@update')->name('cert.update');
 });
 
 Auth::routes();
@@ -27,3 +29,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/test', function (){
     return view('test');
 });
+
