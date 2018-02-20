@@ -45,7 +45,6 @@ class CertController extends Controller
      */
     public function store(Request $request, Cert $cert)
     {
-
         $now = Carbon::now();
         $startDay = $now->year . '/' . $now->month . '/'. $now->day;
         switch ($request->deadline) {
@@ -121,11 +120,15 @@ class CertController extends Controller
 //            echo "\r\n";
 //            echo "<br>";
             $data =  $x509->saveX509($result);
-            $cert->create([
+            Cert::create([
                 'content' => $data,
                 'email' => $request->email,
                 'customer_name' => $request->name,
-                'user_id' => Auth::user()->id
+                'user_id' => Auth::user()->id,
+                'phone_number' => $request->phone_number,
+                'identification_card' => $request->identification_card,
+                'date_create_id_cart' => $request->date_create_id_cart,
+                'address' => $request->ward . ', ' . $request->district . ', ' . $request->province,
             ]);
 
             return redirect()->route('certs.index')->with('messages', 'Thêm thành công');
@@ -194,9 +197,17 @@ class CertController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Cert $cert)
     {
-        //
+        try {
+            $cert->update([
+                'status' => 0,
+            ]);
+
+            return redirect()->route('certs.index')->with('messages', 'Thu hồi thành công');
+        } catch (Exception $ex) {
+            return redirect()->route('certs.index')->with('errors', 'Không thể thu hồi');
+        }
     }
     /*
      * Filter order by order status

@@ -100,8 +100,17 @@
                                             </a>
                                             <a href="#" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> Cấp phát lại
                                             </a>
-                                            <a href="#" class="btn btn-danger btn-xs"> <i class="fa fa-pencil"></i> Thu hồi
-                                            </a>
+
+                                            @if ($cert->status == 1)
+                                            {!! Form::open([
+                                                'route' => ['certs.destroy', 'cert' => $cert->id],
+                                                'method' => 'delete',
+                                                'class' => 'inline'
+                                            ]) !!}
+                                                <button class="btn btn-danger btn-xs evict"> <i class="fa fa-pencil"></i> Thu hồi
+                                                </button>
+                                            {!! Form::close() !!}
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -163,6 +172,15 @@
                     }
                 })
             })
+            
+            $('.evict').click(function (e) {
+                var r = confirm("Bạn có thực sự muốn thu hồi chứng thư này!");
+                if (r == true) {
+                    txt = "You pressed OK!";
+                } else {
+                    e.preventDefault();
+                }
+            })
         })
     </script>
     <script>
@@ -171,14 +189,5 @@
         });
     </script>
 
-    @if(session()->has('messages'))
-        <script>
-            toastr.success('Tạo chứng thư thành công');
-        </script>
-    @endif
-    @if(session()->has('errors'))
-        <script>
-            toastr.error('Tạo chứng thư thất bại');
-        </script>
-    @endif
+    @include('components.admin.toastr')
 @endsection

@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                Thông tin chứng thư số {{$cert->id}}
+                Thông tin chứng thư số #{{$cert->id}}
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -80,15 +80,19 @@
                                 <table class="table-striped" width="100%">
                                     <tr>
                                         <td class="width-200">Nội dung</td>
-                                        <td class="padding-left-0"><strong>{{$cert->content}}</strong></td>
+                                        <td class="padding-left-0"><strong>{{$certInfor['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']}}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td class="width-200">Phone</td>
-                                        <td class="padding-left-0"><strong>01658238399</strong></td>
+                                        <td class="width-200">Thuật toán</td>
+                                        <td class="padding-left-0"><strong>{{$certInfor['signatureAlgorithm']['algorithm']}}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td class="width-200">Address</td>
-                                        <td class="padding-left-0"><strong>235 Nguyễn Ngọc Nại</strong></td>
+                                        <td class="width-200">Ngày bắt đầu</td>
+                                        <td class="padding-left-0"><strong>{{$certInfor['tbsCertificate']['validity']['notBefore']['utcTime']}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="width-200">Ngày kết thúc</td>
+                                        <td class="padding-left-0"><strong>{{$certInfor['tbsCertificate']['validity']['notAfter']['utcTime']}}</strong></td>
                                     </tr>
 
                                 </table>
@@ -105,13 +109,21 @@
                     <div class="box-body">
                         <div class="col-sm-12">
                             <div class="box-info col-md-12" style="margin-top: 30px;">
-
+                                @if($cert->status == 1)
                                 <div class="row" id="process-bar">
                                     <div class="col-sm-offset-5 col-md-4 status">
                                         <div class="circle background-color-active"><i class="fa fa-refresh fa-spin pending"></i></div>
                                         <div class="progress">Còn giá trị</div>
                                     </div>
                                 </div>
+                                @else
+                                <div class="row" id="process-bar">
+                                    <div class="col-md-4 col-md-offset-5 status">
+                                        <div class="circle background-red"><i class="fa fa-times" style="font-size: 80px"></i></div>
+                                        <div class="progress">Thu hồi</div>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
 
 
@@ -195,14 +207,5 @@
             $('.js-example-basic-single').select2();
         });
     </script>
-    @if(session()->has('messages'))
-        <script>
-            toastr.success('{{session('messages')}}');
-        </script>
-    @endif
-    @if(session()->has('errors'))
-        <script>
-            toastr.error('{{session('errors')}}');
-        </script>
-    @endif
+    @include('components.admin.toastr')
 @endsection

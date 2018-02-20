@@ -9,6 +9,7 @@
         "acacha/admin-lte-template-laravel": "4.*",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
+        "laravelcollective/html": "^5.4.0",
         "phpseclib/phpseclib": "^2.0"
     },
     "require-dev": {

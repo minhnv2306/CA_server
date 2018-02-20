@@ -1,0 +1,10 @@
+@if(session()->has('messages'))
+    <script>
+        toastr.success('{{session('messages')}}');
+    </script>
+@endif
+@if(session()->has('errors'))
+    <script>
+        toastr.error('{{session('errors')}}');
+    </script>
+@endif

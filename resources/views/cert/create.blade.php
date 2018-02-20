@@ -79,7 +79,7 @@
                                                             <td>
                                                                 <div class="form-group">
                                                                     <select class="js-example-basic-single"
-                                                                            id="cate_product" style="width: 100%" name="tinh">
+                                                                            id="cate_product" style="width: 100%" name="province">
                                                                         <option value="Hà Nội">Hà Nội</option>
                                                                     </select>
                                                                 </div>
