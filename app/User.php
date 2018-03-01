@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Cert');
     }
+    public static function getAllUsers()
+    {
+        return self::orderBy('id', 'desc')
+            ->get();
+    }
 }

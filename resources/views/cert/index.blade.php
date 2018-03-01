@@ -13,7 +13,6 @@
         </section>
         <section class="content">
 
-
             <div class="row">
                 <div class="col-xs-12">
 
@@ -39,7 +38,8 @@
                                 <div class="row dataTables_wrapper form-inline dt-bootstrap no-footer">
                                     <div class="col-md-6 pull-left">
                                         <button data-status="0" class="btn btn-danger filterStatus">Hết hạn</button>
-                                        <button data-status="1" class="btn btn-success filterStatus">Còn giá trị</button>
+                                        <button data-status="1" class="btn btn-success filterStatus">Còn giá trị
+                                        </button>
                                         <button data-status="2" class="btn btn-default filterStatus">Xem tất cả</button>
                                     </div>
 
@@ -82,37 +82,38 @@
                                     </thead>
                                     <tbody>
                                     @foreach($certs as $cert)
-                                    <tr>
-                                        <td>{{$cert->id}}</td>
-                                        <td>{{$cert->email}}</td>
-                                        <td>{{$cert->customer_name}}</td>
-                                        <td>{{$cert->identification_card}}</td>
-                                        <td>
-                                            @if($cert->status)
-                                                <span class="label label-success">Còn hạn</span>
-                                            @else
-                                                <span class="label label-danger">Hết hạn</span>
-                                            @endif
-                                        </td>
-                                        <td>{{$cert->created_at}}</td>
-                                        <td>
-                                            <a href="{{route('certs.show', ['cert' => $cert->id])}}" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi tiết
-                                            </a>
-                                            <a href="#" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> Cấp phát lại
-                                            </a>
+                                        <tr>
+                                            <td>{{$cert->id}}</td>
+                                            <td>{{$cert->email}}</td>
+                                            <td>{{$cert->customer_name}}</td>
+                                            <td>{{$cert->identification_card}}</td>
+                                            <td>
+                                                @if($cert->status)
+                                                    <span class="label label-success">Còn hạn</span>
+                                                @else
+                                                    <span class="label label-danger">Hết hạn</span>
+                                                @endif
+                                            </td>
+                                            <td>{{$cert->created_at}}</td>
+                                            <td>
+                                                <a href="{{route('certs.show', ['cert' => $cert->id])}}"
+                                                   class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi
+                                                    tiết
+                                                </a>
 
-                                            @if ($cert->status == 1)
-                                            {!! Form::open([
-                                                'route' => ['certs.destroy', 'cert' => $cert->id],
-                                                'method' => 'delete',
-                                                'class' => 'inline'
-                                            ]) !!}
-                                                <button class="btn btn-danger btn-xs evict"> <i class="fa fa-pencil"></i> Thu hồi
-                                                </button>
-                                            {!! Form::close() !!}
-                                            @endif
-                                        </td>
-                                    </tr>
+                                                @if ($cert->status == 1)
+                                                    {!! Form::open([
+                                                        'route' => ['certs.destroy', 'cert' => $cert->id],
+                                                        'method' => 'delete',
+                                                        'class' => 'inline'
+                                                    ]) !!}
+                                                    <button class="btn btn-danger btn-xs evict"><i
+                                                                class="fa fa-trash"></i> Thu hồi
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                @endif
+                                            </td>
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -160,10 +161,8 @@
                             data.status = statusBtn[data.status];
                             data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
                                 + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ' +
-                                '<a href="/certs/' + data.id + '" id="edit" class="btn btn-warning btn-xs">'
-                                + ' <i class="fa fa-pencil"> Cấp phát lại </i> </a> ' +
                                 '<a href="/certs/' + data.id + '" id="edit" class="btn btn-danger btn-xs">'
-                                + ' <i class="fa fa-pencil"> Thu hồi </i> </a> ' ;
+                                + ' <i class="fa fa-pencil"> Thu hồi </i> </a> ';
                             dataTable.push(Object.values(data));
                         });
                         datatable.rows.add(dataTable); // Add data to datatable, array
@@ -172,7 +171,7 @@
                     }
                 })
             })
-            
+
             $('.evict').click(function (e) {
                 var r = confirm("Bạn có thực sự muốn thu hồi chứng thư này!");
                 if (r == true) {

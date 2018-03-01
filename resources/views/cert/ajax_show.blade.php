@@ -22,8 +22,6 @@
     <td>
         <a href="http://cert.local/certs/1" class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi tiết
         </a>
-        <a href="#" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> Cấp phát lại
-        </a>
         <a href="#" class="btn btn-danger btn-xs"> <i class="fa fa-pencil"></i> Thu hồi
         </a>
     </td>

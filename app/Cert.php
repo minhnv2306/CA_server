@@ -12,4 +12,9 @@ class Cert extends Model
     {
         return $this->belongsTo('App\User');
     }
+    public static function getAllCerts()
+    {
+        return self::orderBy('id', 'desc')
+            ->get();
+    }
 }

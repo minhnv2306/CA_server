@@ -16,7 +16,7 @@
         <ul class="sidebar-menu" data-widget="tree">
 
             <li class="">
-                <a href="http://cert.local/admin/dashboard"><i class="fa fa-dashboard"></i>
+                <a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i>
                     <span>Dashboard</span></a>
             </li>
 
@@ -28,9 +28,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="http://cert.local/notification/notifications">User</a></li>
-                    <li class=""><a href="http://cert.local/notification/notifications">Nhóm quyền</a></li>
-                    <li class=""><a href="http://cert.local/notification/notifications">Chỉnh sửa quyền</a></li>
+                    <li class=""><a href="{{route('users.index')}}">User</a></li>
+                    <li class=""><a href="{{route('users.roles')}}">Nhóm quyền</a></li>
                 </ul>
             </li>
 

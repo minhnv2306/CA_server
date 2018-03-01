@@ -21,6 +21,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function dashboard()
+    {
+        dd(1);
+    }
     public function index()
     {
         return view('home');

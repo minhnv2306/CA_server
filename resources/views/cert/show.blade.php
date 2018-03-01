@@ -80,19 +80,26 @@
                                 <table class="table-striped" width="100%">
                                     <tr>
                                         <td class="width-200">Nội dung</td>
-                                        <td class="padding-left-0"><strong>{{$certInfor['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']}}</strong></td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$certInfor['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']}}</strong>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="width-200">Thuật toán</td>
-                                        <td class="padding-left-0"><strong>{{$certInfor['signatureAlgorithm']['algorithm']}}</strong></td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$certInfor['signatureAlgorithm']['algorithm']}}</strong></td>
                                     </tr>
                                     <tr>
                                         <td class="width-200">Ngày bắt đầu</td>
-                                        <td class="padding-left-0"><strong>{{$certInfor['tbsCertificate']['validity']['notBefore']['utcTime']}}</strong></td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$certInfor['tbsCertificate']['validity']['notBefore']['utcTime']}}</strong>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="width-200">Ngày kết thúc</td>
-                                        <td class="padding-left-0"><strong>{{$certInfor['tbsCertificate']['validity']['notAfter']['utcTime']}}</strong></td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$certInfor['tbsCertificate']['validity']['notAfter']['utcTime']}}</strong>
+                                        </td>
                                     </tr>
 
                                 </table>
@@ -102,7 +109,8 @@
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                         class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i>
                             </button>
                         </div>
                     </div>
@@ -110,19 +118,21 @@
                         <div class="col-sm-12">
                             <div class="box-info col-md-12" style="margin-top: 30px;">
                                 @if($cert->status == 1)
-                                <div class="row" id="process-bar">
-                                    <div class="col-sm-offset-5 col-md-4 status">
-                                        <div class="circle background-color-active"><i class="fa fa-refresh fa-spin pending"></i></div>
-                                        <div class="progress">Còn giá trị</div>
+                                    <div class="row" id="process-bar">
+                                        <div class="col-sm-offset-5 col-md-4 status">
+                                            <div class="circle background-color-active"><i
+                                                        class="fa fa-refresh fa-spin pending"></i></div>
+                                            <div class="progress">Còn giá trị</div>
+                                        </div>
                                     </div>
-                                </div>
                                 @else
-                                <div class="row" id="process-bar">
-                                    <div class="col-md-4 col-md-offset-5 status">
-                                        <div class="circle background-red"><i class="fa fa-times" style="font-size: 80px"></i></div>
-                                        <div class="progress">Thu hồi</div>
+                                    <div class="row" id="process-bar">
+                                        <div class="col-md-4 col-md-offset-5 status">
+                                            <div class="circle background-red"><i class="fa fa-times"
+                                                                                  style="font-size: 80px"></i></div>
+                                            <div class="progress">Thu hồi</div>
+                                        </div>
                                     </div>
-                                </div>
                                 @endif
                             </div>
 
@@ -174,7 +184,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box tab-pane"  style="" id="comment-hisoty">
+                <div class="box tab-pane" style="" id="comment-hisoty">
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>

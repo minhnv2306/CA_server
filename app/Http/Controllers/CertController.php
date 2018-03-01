@@ -22,9 +22,9 @@ class CertController extends Controller
      */
     public function index()
     {
-        $certs = Cert::get();
-
-        return view('cert.index', compact('certs'));
+        return view('cert.index', [
+            'certs' => Cert::getAllCerts(),
+        ]);
     }
 
     /**
