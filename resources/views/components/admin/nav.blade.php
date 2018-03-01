@@ -24,7 +24,7 @@
                         <!-- The user image in the navbar-->
                         <img src="/img/avatar.png" class="user-image">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">admin</span>
+                        <span class="hidden-xs">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
@@ -33,8 +33,8 @@
                                  alt="User Image">
 
                             <p>
-                                admin@admin.com
-                                <small>Thành viên từ 01/1970</small>
+                                {{\Illuminate\Support\Facades\Auth::user()->email}}
+                                <small>Thành viên từ {{\Illuminate\Support\Facades\Auth::user()->created_at}}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->

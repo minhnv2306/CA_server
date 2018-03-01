@@ -7,7 +7,7 @@
                 <img src="/img/avatar.png" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>Admin </p>
+                <p>{{\Illuminate\Support\Facades\Auth::user()->name}} </p>
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>

@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('title', 'Quản lý chứng thư')
 @section('content')
     <div class="content-wrapper">
         <section class="content-header">

@@ -5,6 +5,6 @@
 @endif
 @if(session()->has('errors'))
     <script>
-        toastr.error('{{session('errors')}}');
+        toastr.error('Thao tác chưa thành công');
     </script>
 @endif
