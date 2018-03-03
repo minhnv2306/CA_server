@@ -1,15 +1,15 @@
 @extends('layouts.master')
-@section('title', 'Quản lý người dùng')
+@section('title', 'Quản lý phân quyền')
 @section('content')
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                Quản lý người dùng
+                Quản lý quyền
             </h1>
             <ol class="breadcrumb">
                 <li><a href="http://cert.local/admin"><i class="fa fa-dashboard"></i> Trang chủ</a>
                 </li>
-                <li class="active">Quản lý người dùng</li>
+                <li class="active">Quản lý quyền</li>
             </ol>
         </section>
         <section class="content">
@@ -22,7 +22,7 @@
                             <div class="row">
                                 <div class="pull-right padding-right-15">
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#create-user" id="addNew">
-                                        <i class="fa fa-plus"></i> Tạo người dùng mới
+                                        <i class="fa fa-plus"></i> Tạo quyền
                                     </button>
 
                                     @include('components.modal.user_create')
@@ -44,24 +44,24 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($users as $user)
+                                    @foreach($roles as $role)
                                         <tr>
-                                            <td> {{$user->id}}</td>
-                                            <td> {{$user->email}}</td>
-                                            <td> {{$user->name}}</td>
-                                            <td> {{$user->created_at}}</td>
+                                            <td> {{$role->id}}</td>
+                                            <td> {{$role->email}}</td>
+                                            <td> {{$role->name}}</td>
+                                            <td> {{$role->created_at}}</td>
                                             <td>
-                                                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#user{{$user->id}}"> <i class="fa fa-pencil"></i> Chỉnh sửa
+                                                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#role{{$role->id}}"> <i class="fa fa-pencil"></i> Chỉnh sửa
                                                 </button>
                                                 {!! Form::open([
-                                                    'route' => ['users.destroy', 'user' => $user->id],
+                                                    'route' => ['roles.destroy', 'role' => $role->id],
                                                     'method' => 'DELETE',
                                                     'class' => 'inline'
                                                 ]) !!}
-                                                <button class="btn btn-danger btn-xs delete-user"> <i class="fa fa-trash"></i> Xóa
+                                                <button class="btn btn-danger btn-xs delete-role"> <i class="fa fa-trash"></i> Xóa
                                                 </button>
                                                 {!! Form::close() !!}
-                                                @include('components.modal.user_show', ['user' => $user])
+                                                @include('components.modal.role_show', ['role' => $role])
                                             </td>
                                         </tr>
                                     @endforeach
@@ -84,12 +84,12 @@
     @parent
     @include('components.admin.toastr')
     <script>
-        $('.delete-user').click(function (e) {
+        $('.delete-role').click(function (e) {
             if(!confirm('Bạn có thực sự muốn xóa?')) {
                 e.preventDefault();
             }
         })
         $('.user-manager').addClass('active');
-        $('.user').addClass('active');
+        $('.role').addClass('active');
     </script>
 @endsection

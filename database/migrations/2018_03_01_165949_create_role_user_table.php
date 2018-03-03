@@ -15,7 +15,9 @@ class CreateRoleUserTable extends Migration
     {
         Schema::create('role_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('role_id');
+            $table->string('note');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateRoleUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('role_user');
     }
 }

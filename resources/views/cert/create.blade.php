@@ -181,6 +181,7 @@
                     format:'YYYY-MM-DD HH:mm:ss',
                 });
             });
+            $('.cert').addClass('active');
         });
     </script>
 @endsection

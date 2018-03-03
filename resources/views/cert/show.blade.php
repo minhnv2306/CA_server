@@ -215,6 +215,7 @@
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
+            $('.cert').addClass('active');
         });
     </script>
     @include('components.admin.toastr')

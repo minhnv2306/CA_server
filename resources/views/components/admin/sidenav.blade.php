@@ -20,7 +20,7 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <li class="  treeview ">
+            <li class="user-manager treeview">
                 <a href="#">
                     <i class="fa fa-user-o"></i> <span>Quản lý người dùng</span>
                     <span class="pull-right-container">
@@ -28,12 +28,12 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="{{route('users.index')}}">User</a></li>
-                    <li class=""><a href="{{route('users.roles')}}">Nhóm quyền</a></li>
+                    <li class="user"><a href="{{route('users.index')}}"><i class="fa fa-circle-o"></i>User</a></li>
+                    <li class="role"><a href="{{route('roles.index')}}"><i class="fa fa-circle-o"></i>Nhóm quyền</a></li>
                 </ul>
             </li>
 
-            <li class="active treeview ">
+            <li class="cert treeview ">
                 <a href="#">
                     <i class="fa fa-id-card-o"></i> <span>Quản lý chứng thư</span>
                     <span class="pull-right-container">
@@ -41,10 +41,10 @@
                             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="{{route('certs.index')}}">Chứng thư số cá nhân</a></li>
+                    <li class="cert"><a href="{{route('certs.index')}}"><i class="fa fa-circle-o"></i>Chứng thư số cá nhân</a></li>
                 </ul>
             </li>
-            <li class="  treeview ">
+            <li class="treeview ">
                 <a href="#">
                     <i class="fa fa-cog"></i> <span>Cài đặt</span>
                     <span class="pull-right-container">
@@ -52,9 +52,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="http://cert.local/notification/notifications">Thuật toán</a></li>
-                    <li class=""><a href="http://cert.local/notification/notifications">Thời hạn thuật toán</a></li>
-                    <li class=""><a href="http://cert.local/notification/notifications">Thông tin nhà phát hành</a></li>
+                    <li class=""><a href="http://cert.local/notification/notifications"><i class="fa fa-circle-o"></i>Thuật toán</a></li>
+                    <li class=""><a href="http://cert.local/notification/notifications"><i class="fa fa-circle-o"></i>Thời hạn thuật toán</a></li>
+                    <li class=""><a href="http://cert.local/notification/notifications"><i class="fa fa-circle-o"></i>Thông tin nhà phát hành</a></li>
                 </ul>
             </li>
 

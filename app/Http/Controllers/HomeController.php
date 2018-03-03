@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
-        dd(1);
+        return view('dashboard');
     }
     public function index()
     {
