@@ -28,7 +28,15 @@
                     <label for="pwd">Name:</label>
                     <input type="text" class="form-control" id="pwd" value="{{$role->name}}" name="name">
                 </div>
+                @foreach($objects as $object)
+                    <div class="form-group">
+                        <label for="pwd">{{$object->name}}</label>
+                        <input type="radio" id="pwd" value="{{$object->name}}" name="status{{$object->id}}" checked> Xem
+                        <input type="radio" id="pwd" value="{{$object->name}}" name="status{{$object->id}}"> Chỉnh sửa
+                    </div>
+                @endforeach
             </div>
+
             <div class="modal-footer">
                 <button class="btn btn-primary">Cập nhật</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Object;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -9,10 +10,13 @@ class RoleController extends Controller
 {
     public function index()
     {
+        dd(Role::checkPermissionOfRole(1, 1));
         return view('role.index', [
-           'roles' => Role::all(),
+            'roles' => Role::all(),
+            'objects' => Object::all(),
         ]);
     }
+
     public function destroy(Role $role)
     {
         try {

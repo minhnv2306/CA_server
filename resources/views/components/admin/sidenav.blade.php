@@ -28,8 +28,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="user"><a href="{{route('users.index')}}"><i class="fa fa-circle-o"></i>User</a></li>
-                    <li class="role"><a href="{{route('roles.index')}}"><i class="fa fa-circle-o"></i>Nhóm quyền</a></li>
+                    <li class="user"><a href="{{route('users.index')}}"><i class="fa fa-circle-o"></i>Quản lý người dùng</a></li>
+                    <li class="role"><a href="{{route('roles.index')}}"><i class="fa fa-circle-o"></i>Quản lý vai trò</a></li>
+                    <li class="role"><a href="{{route('objects.index')}}"><i class="fa fa-circle-o"></i>Quản lý đối tượng</a></li>
                 </ul>
             </li>
 
