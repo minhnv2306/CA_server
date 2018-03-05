@@ -10,7 +10,6 @@ class RoleController extends Controller
 {
     public function index()
     {
-        dd(Role::checkPermissionOfRole(1, 1));
         return view('role.index', [
             'roles' => Role::all(),
             'objects' => Object::all(),

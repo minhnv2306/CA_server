@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
     Route::resource('objects', 'ObjectController');
+    Route::get('certs/create', 'CertController@create')->name('certs.create')->middleware('can:create-cert');
     Route::get('users/role', 'UserController@roles')->name('users.roles');
     Route::get('certs/filter-status/{status}', 'CertController@getListByStatus');
     Route::post('cert/update', 'CertController@update')->name('cert.update');
