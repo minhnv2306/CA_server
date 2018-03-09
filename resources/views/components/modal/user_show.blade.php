@@ -32,6 +32,18 @@
                         <label for="pwd">Name:</label>
                         <input type="text" class="form-control" id="pwd" value="{{$user->name}}" name="name">
                     </div>
+                    <div class="form-group">
+                        <label for="sel1">Quyền:</label>
+                        <select class="form-control" name="role_id">
+                            @foreach(\App\Role::getAllRole() as $role)
+                                @if($user->role_id == $role->id)
+                                    <option value="{{$role->id}}" selected>{{$role->name}}</option>
+                                @else
+                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary">Cập nhật</button>
