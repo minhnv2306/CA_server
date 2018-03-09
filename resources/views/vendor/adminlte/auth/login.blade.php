@@ -3,7 +3,11 @@
 @section('htmlheader_title')
     Log in
 @endsection
-
+<style>
+    body {
+        background-image: url("/img/background.jpg")  !important;
+    }
+</style>
 @section('content')
 <body class="hold-transition login-page">
     <div id="app">

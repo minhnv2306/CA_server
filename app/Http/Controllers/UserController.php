@@ -32,13 +32,9 @@ class UserController extends Controller
     }
     public function store(UserRequest $request)
     {
+        $data = $request->except('password_confirmation');
         try {
-            User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-                'role_id' => $request->role_id,
-            ]);
+            User::create($data);
             return redirect()->back()->with('messages', 'Tạo thành công');
         } catch (Exception $ex) {
             return redirect()->back()->with('errors', $ex->getMessage());

@@ -33,6 +33,18 @@
                     <input type="text" class="form-control" id="name" name="name" required>
                 </div>
                 <div class="form-group">
+                    <label for="pwd">Số điện thoại:</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="sel1">Nơi làm việc:</label>
+                    <select class="form-control" name="role_id" id="role_id" required>
+                        @foreach(\App\User::getAllWork() as $work)
+                            <option value="{{$work}}">{{$work}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="sel1">Quyền:</label>
                     <select class="form-control" name="role_id" id="role_id" required>
                         @foreach(\App\Role::getAllRole() as $role)
