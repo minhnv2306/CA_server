@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -52,5 +53,10 @@ class User extends Authenticatable
             'Chi nhánh quận Hoàng Mai',
             'Chi nhánh quận Thanh Xuân'
         );
+    }
+
+    public static function checkAccount($email, $password)
+    {
+        return Auth::attempt(['email' => $email, 'password' => $password]);
     }
 }

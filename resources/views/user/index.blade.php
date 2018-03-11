@@ -21,7 +21,8 @@
                         <div class="box-header">
                             <div class="row">
                                 <div class="pull-right padding-right-15">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#create-user" id="addNew">
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#create-user"
+                                            id="addNew">
                                         <i class="fa fa-plus"></i> Tạo người dùng mới
                                     </button>
 
@@ -33,13 +34,16 @@
                         <div class="box-body">
                             <div class="table-responsive">
 
-                                <table id="list-cert" class="table no-margin data_table table table-bordered table-striped ">
+                                <table id="list-cert"
+                                       class="table no-margin data_table table table-bordered table-striped ">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Email</th>
                                         <th>Họ và tên</th>
                                         <th>Quyền</th>
+                                        <th>Chi nhánh</th>
+                                        <th>Số điện thoại</th>
                                         <th>Ngày tạo</th>
                                         <th>Hành động</th>
                                     </tr>
@@ -57,19 +61,29 @@
                                                     <span class="label label-danger">Admin</span>
                                                 @endif
                                             </td>
+                                            <td> {{$user->work}}</td>
+                                            <td> {{$user->phone_number}}</td>
                                             <td> {{$user->created_at}}</td>
                                             <td>
-                                                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#user{{$user->id}}"> <i class="fa fa-pencil"></i> Chỉnh sửa
-                                                </button>
-                                                {!! Form::open([
-                                                    'route' => ['users.destroy', 'user' => $user->id],
-                                                    'method' => 'DELETE',
-                                                    'class' => 'inline'
-                                                ]) !!}
-                                                <button class="btn btn-danger btn-xs delete-user"> <i class="fa fa-trash"></i> Xóa
-                                                </button>
-                                                {!! Form::close() !!}
-                                                @include('components.modal.user_show', ['user' => $user])
+                                                @can('edit', $user)
+                                                    <button class="btn btn-primary btn-xs" data-toggle="modal"
+                                                            data-target="#user{{$user->id}}"><i
+                                                                class="fa fa-pencil"></i> Chỉnh sửa
+                                                    </button>
+                                                    @include('components.modal.user_show', ['user' => $user])
+                                                    @if(\Illuminate\Support\Facades\Auth::user()->id != $user->id)
+                                                        {!! Form::open([
+                                                            'route' => ['users.destroy', 'user' => $user->id],
+                                                            'method' => 'DELETE',
+                                                            'class' => 'inline'
+                                                        ]) !!}
+                                                        <button class="btn btn-danger btn-xs delete-user"><i
+                                                                    class="fa fa-trash"></i> Xóa
+                                                        </button>
+                                                        {!! Form::close() !!}
+                                                    @endif
+                                                @endif
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
@@ -93,7 +107,7 @@
     @include('components.admin.toastr')
     <script>
         $('.delete-user').click(function (e) {
-            if(!confirm('Bạn có thực sự muốn xóa?')) {
+            if (!confirm('Bạn có thực sự muốn xóa?')) {
                 e.preventDefault();
             }
         })
@@ -126,7 +140,7 @@
                         if (data.result == 0) {
                             alert(data.message);
                         } else {
-
+                            $('#create-user-form').submit();
                         }
                     }
                 });

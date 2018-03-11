@@ -105,6 +105,53 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="box-info col-sm-12">
+                                <h3>Thông tin người cấp</h3>
+                                <table class="table-striped" width="100%">
+                                    <tr>
+                                        <td class="width-200">Họ và tên</td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$cert->user->name}}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="width-200">Email</td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$cert->user->email}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="width-200">Số điện thoại</td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$cert->user->phone_number}}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="width-200">Ngày tạo</td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$cert->created_at}}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="width-200">Quyền</td>
+                                        <td>
+                                            @if($cert->user->role_id == 2)
+                                                <span class="label label-success">User</span>
+                                            @else
+                                                <span class="label label-danger">Admin</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="width-200">Địa điểm</td>
+                                        <td class="padding-left-0">
+                                            <strong>{{$cert->user->work}}</strong>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                         class="fa fa-minus"></i>
@@ -136,7 +183,7 @@
                                 @endif
                             </div>
 
-
+                            @can('edit', $cert)
                             <div class="row font-size-17">
                                 <div class="col-md-12">
                                     <!-- general form elements -->
@@ -181,6 +228,7 @@
                                     <!-- /.box -->
                                 </div>
                             </div>
+                            @endcan
                         </div>
                     </div>
                 </div>
