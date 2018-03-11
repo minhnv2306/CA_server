@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Quản lý phân quyền')
+@section('title', 'Dashboard')
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->

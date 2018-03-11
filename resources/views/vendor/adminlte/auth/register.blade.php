@@ -5,12 +5,16 @@
 @endsection
 
 @section('content')
-
+<style>
+    body {
+        background-image: url("/img/background.jpg")  !important;
+    }
+</style>
 <body class="hold-transition register-page">
     <div id="app">
         <div class="register-box">
             <div class="register-logo">
-                <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
+                <a href="{{ url('/home') }}">Welcome to my CA</a>
             </div>
 
             @if (count($errors) > 0)
@@ -35,6 +39,17 @@
                     <div class="form-group has-feedback">
                         <input type="email" class="form-control" placeholder="{{ trans('adminlte_lang::message.email') }}" name="email" value="{{ old('email') }}"/>
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="number" class="form-control" placeholder="Phone number" name="phone_number" value="{{ old('email') }}"/>
+                        <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="work" required>
+                            <option value="Chi nhánh quận Hai Bà Trưng">Chi nhánh quận Hai Bà Trưng</option>
+                            <option value="Chi nhánh quận Hoàng Mai">Chi nhánh quận Hoàng Mai</option>
+                            <option value="Chi nhánh quận Thanh Xuân">Chi nhánh quận Thanh Xuân</option>
+                        </select>
                     </div>
                     <div class="form-group has-feedback">
                         <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
@@ -64,8 +79,6 @@
                         </div><!-- /.col -->
                     </div>
                 </form>
-
-                @include('adminlte::auth.partials.social_login')
 
                 <a href="{{ url('/login') }}" class="text-center">{{ trans('adminlte_lang::message.membreship') }}</a>
             </div><!-- /.form-box -->

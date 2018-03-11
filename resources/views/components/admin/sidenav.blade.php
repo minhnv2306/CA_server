@@ -19,7 +19,7 @@
                 <a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i>
                     <span>Dashboard</span></a>
             </li>
-
+            @can('manager-user')
             <li class="user-manager treeview">
                 <a href="#">
                     <i class="fa fa-user-o"></i> <span>Quản lý người dùng</span>
@@ -29,11 +29,10 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="user"><a href="{{route('users.index')}}"><i class="fa fa-circle-o"></i>Quản lý người dùng</a></li>
-                    <li class="role"><a href="{{route('roles.index')}}"><i class="fa fa-circle-o"></i>Quản lý vai trò</a></li>
-                    <li class="role"><a href="{{route('objects.index')}}"><i class="fa fa-circle-o"></i>Quản lý đối tượng</a></li>
+                    <li class="role"><a href="{{route('roles.index')}}"><i class="fa fa-circle-o"></i>Thông tin cá nhân</a></li>
                 </ul>
             </li>
-
+            @endcan
             <li class="cert treeview ">
                 <a href="#">
                     <i class="fa fa-id-card-o"></i> <span>Quản lý chứng thư</span>

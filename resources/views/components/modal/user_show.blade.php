@@ -29,8 +29,36 @@
                         <input type="text" class="form-control" id="usr" value="{{$user->email}}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Name:</label>
+                        <label for="pwd">Họ và tên:</label>
                         <input type="text" class="form-control" id="pwd" value="{{$user->name}}" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Số điện thoại:</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{$user->phone_number}}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1">Nơi làm việc:</label>
+                        <select class="form-control" name="work">
+                            @foreach(\App\User::getAllWork() as $work)
+                                @if($user->work== $work)
+                                    <option value="{{$work}}" selected>{{$work}}</option>
+                                @else
+                                    <option value="{{$work}}">{{$work}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1">Quyền:</label>
+                        <select class="form-control" name="role_id">
+                            @foreach(\App\Role::getAllRole() as $role)
+                                @if($user->role_id == $role->id)
+                                    <option value="{{$role->id}}" selected>{{$role->name}}</option>
+                                @else
+                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

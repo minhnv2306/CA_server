@@ -23,4 +23,8 @@ class Role extends Model
             return 'Edit';
         }
     }
+    public static function getAllRole()
+    {
+        return self::all();
+    }
 }

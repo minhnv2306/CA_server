@@ -38,7 +38,8 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Email</th>
-                                        <th>Họ va tên</th>
+                                        <th>Họ và tên</th>
+                                        <th>Quyền</th>
                                         <th>Ngày tạo</th>
                                         <th>Hành động</th>
                                     </tr>
@@ -49,6 +50,13 @@
                                             <td> {{$user->id}}</td>
                                             <td> {{$user->email}}</td>
                                             <td> {{$user->name}}</td>
+                                            <td>
+                                                @if($user->role_id == 2)
+                                                    <span class="label label-success">User</span>
+                                                @else
+                                                    <span class="label label-danger">Admin</span>
+                                                @endif
+                                            </td>
                                             <td> {{$user->created_at}}</td>
                                             <td>
                                                 <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#user{{$user->id}}"> <i class="fa fa-pencil"></i> Chỉnh sửa
@@ -91,5 +99,38 @@
         })
         $('.user-manager').addClass('active');
         $('.user').addClass('active');
+        $('#create-user-button').click(function (e) {
+            var data = {
+                email: $('#email').val(),
+                name: $('#name').val(),
+                role_id: $('#role_id').val(),
+                password: $('#password').val(),
+                password_confirmation: $('#password_confirmation').val()
+            }
+            if (data.email && data.name && data.password && data.password_confirmation) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/users/checkCreate',
+                    type: 'POST',
+                    data: data,
+                    beforeSend: function () {
+                        $('.modal-body').waitMe({
+                            effect: 'bounce',
+                            text: 'Đang xử lý',
+                            bg: 'rgba(255,255,255,0.7)',
+                            color: '#000'
+                        });
+                    },
+                    success: function (data) {
+                        $('.modal-body').waitMe('hide');
+                        if (data.result == 0) {
+                            alert(data.message);
+                        } else {
+
+                        }
+                    }
+                });
+            }
+        })
     </script>
 @endsection

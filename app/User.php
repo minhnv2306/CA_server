@@ -15,7 +15,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'role_id',
+        'phone_number',
+        'work',
     ];
 
     /**
@@ -35,5 +40,17 @@ class User extends Authenticatable
     {
         return self::orderBy('id', 'desc')
             ->get();
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+    public static function getAllWork()
+    {
+        return array(
+            'Chi nhánh quận Hai Bà Trưng',
+            'Chi nhánh quận Hoàng Mai',
+            'Chi nhánh quận Thanh Xuân'
+        );
     }
 }

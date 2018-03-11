@@ -17,10 +17,13 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::group(['middleware' => 'can:manager-user'], function () {
+        Route::resource('users', 'UserController');
+    });
     Route::resource('certs', 'CertController');
-    Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
     Route::resource('objects', 'ObjectController');
+    Route::post('/users/checkCreate', 'UserController@checkCretae');
     Route::get('certs/create', 'CertController@create')->name('certs.create')->middleware('can:create-cert');
     Route::get('users/role', 'UserController@roles')->name('users.roles');
     Route::get('certs/filter-status/{status}', 'CertController@getListByStatus');

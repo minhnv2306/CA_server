@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolePermissionTable extends Migration
+class AddPhoneAndWorkToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateRolePermissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_permission', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('role_id');
-            $table->unsignedInteger('permission_id');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('phone_number');
+            $table->string('work');
         });
     }
 
@@ -28,6 +26,6 @@ class CreateRolePermissionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_permission');
+        Schema::dropIfExists('users');
     }
 }
