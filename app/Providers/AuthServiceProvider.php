@@ -30,7 +30,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('create-cert', 'App\Policies\CertPolicy@create');
         Gate::define('manager-user', 'App\Policies\UserPolicy@manager');
         Gate::define('update-user', 'App\Policies\UserPolicy@update');
-
         Gate::define('edit-cert', 'App\Policies\CertPolicy@edit');
     }
 }
