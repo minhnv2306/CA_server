@@ -82,7 +82,6 @@
                                                         </button>
                                                         {!! Form::close() !!}
                                                     @endif
-                                                @endif
                                                 @endcan
                                             </td>
                                         </tr>
