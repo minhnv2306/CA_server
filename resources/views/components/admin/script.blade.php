@@ -66,20 +66,42 @@
     });
     $(function () {
         $('.data_table').DataTable({
-            "order": [[ 0, "desc" ]],
+            "order": [[0, "desc"]],
         });
         $('#date-start').datepicker({
             format: 'dd/mm/yyyy',
             todayHighlight: 'true'
         }).on('changeDate', function (selected) {
             var startDate = new Date(selected.date.valueOf());
-            console.log(startDate);
             $('#date-end').datepicker('setStartDate', startDate);
         });
         $('#date-end').datepicker({
             format: 'dd/mm/yyyy',
             todayHighlight: 'true'
+        }).on('changeDate', function (selected) {
+            var endDate = new Date(selected.date.valueOf());
+            $('#date-start').datepicker('setEndDate', endDate);
         });
+        /*
+         $("#datepicker1").datepicker({dateFormat: 'dd/mm/yy',
+            onSelect: function (selected) {
+                $('#select7').prop( "checked", true);
+                var dt = $.convertStringToDate($('#datepicker1').val());
+                dt.setDate(dt.getDate() + 1);
+                $("#datepicker2").datepicker("option", "minDate", dt);
+                //$("#trip_end").datepicker({dateFormat: 'dd/mm/yy', minDate: dt.setDate(dt.getDate() + 1)});
+            }
+        });
+        $("#datepicker2").datepicker({dateFormat: 'dd/mm/yy',
+            onSelect: function (selected) {
+                $('#select7').prop( "checked", true);
+                var dt = $.convertStringToDate($('#datepicker2').val());
+                dt.setDate(dt.getDate() - 1);
+                $("#datepicker1").datepicker("option", "maxDate", dt);
+                //$("#trip_start").datepicker({dateFormat: 'dd/mm/yy', maxDate: dt.setDate(dt.getDate() - 1)});
+            }
+        });
+         */
         $('#start').click(function () {
             $('#date-start').datepicker("show");
         });

@@ -46,9 +46,10 @@
 
                                     <div class="pull-right padding-right-15">
                                         <!-- filter theo ngay -->
-                                        <form action="http://cert.local/order/filterRangeDate" method="post">
-                                            <input type="hidden" name="_token"
-                                                   value="mzK75lqSiC93Br6fb1KzCM3YpsY7m5g0Y9z5hdB6">
+                                        {!! Form::open([
+                                            'route' => 'filterCert',
+                                            'moethod' => 'POST'
+                                        ]) !!}
                                             <div class="input-group date">
                                                 <input type="text" id="date-start" name="startDate" autocomplete="off"
                                                        class="form-control pull-left" required placeholder="From">
@@ -138,39 +139,6 @@
                 '<span class="label label-danger">Hết hạn</span>',
                 '<span class="label label-success">Còn hạn</span>',
             ];
-            $('.filterStatus').click(function () {
-                var status = $(this).attr('data-status');
-                $.ajax({
-                    url: 'certs/filter-status/' + status,
-                    type: 'GET',
-                    beforeSend: function () {
-                        $('#list-cert').waitMe({
-                            effect: 'bounce',
-                            text: '',
-                            bg: 'rgba(255,255,255,0.7)',
-                            color: '#000'
-                        });
-                    },
-                    success: function (result, status) {
-                        $('#list-cert').waitMe('hide');
-                        var datatable = $('#list-cert').DataTable();
-                        datatable.clear().draw();
-                        var dataTable = []
-
-                        result.forEach(function (data) {
-                            data.status = statusBtn[data.status];
-                            data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
-                                + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ' +
-                                '<a href="/certs/' + data.id + '" id="edit" class="btn btn-danger btn-xs">'
-                                + ' <i class="fa fa-pencil"> Thu hồi </i> </a> ';
-                            dataTable.push(Object.values(data));
-                        });
-                        datatable.rows.add(dataTable); // Add data to datatable, array
-                        datatable.columns.adjust().draw(); // Redraw the DataTable
-                        datatable.order([0, 'desc']).draw();
-                    }
-                })
-            })
 
             $('.evict').click(function (e) {
                 var r = confirm("Bạn có thực sự muốn thu hồi chứng thư này!");
