@@ -65,7 +65,9 @@
         }
     });
     $(function () {
-        $('.data_table').DataTable();
+        $('.data_table').DataTable({
+            "order": [[ 0, "desc" ]],
+        });
         $('#date-start').datepicker({
             format: 'dd/mm/yyyy',
             todayHighlight: 'true'

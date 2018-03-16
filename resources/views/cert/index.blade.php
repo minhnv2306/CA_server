@@ -101,8 +101,7 @@
                                                    class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi
                                                     tiết
                                                 </a>
-
-                                                @if ($cert->status == 1)
+                                                @if ($cert->status == 1 && \Illuminate\Support\Facades\Auth::user()->can('edit', $cert))
                                                     {!! Form::open([
                                                         'route' => ['certs.destroy', 'cert' => $cert->id],
                                                         'method' => 'delete',

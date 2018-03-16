@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Exception;
 use phpseclib\Crypt\RSA;
 use phpseclib\File\X509;
+use App\Http\Requests\CertRequest;
 use Illuminate\Support\Facades\Auth;
 
 class CertController extends Controller
@@ -43,7 +44,7 @@ class CertController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Cert $cert)
+    public function store(CertRequest $request, Cert $cert)
     {
         $now = Carbon::now();
         $startDay = $now->year . '/' . $now->month . '/'. $now->day;

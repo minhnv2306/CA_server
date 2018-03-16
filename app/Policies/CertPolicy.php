@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Cert;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -18,8 +19,8 @@ class CertPolicy
     {
         //
     }
-    public function create(User $user)
+    public function edit(User $user, Cert $cert)
     {
-        return true;
+        return $user->role_id === 1 || $cert->user_id === $user->id;
     }
 }

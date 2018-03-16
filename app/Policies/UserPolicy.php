@@ -30,4 +30,16 @@ class UserPolicy
             return false;
         }
     }
+    public function edit(User $user1, User $user2)
+    {
+        if ($user1->role_id == 1) {
+            if ($user2->role_id == 2 || $user2->id == $user1->id) {
+                return true;
+            }
+        }
+        if ($user1->role_id == 2 && $user2->id == $user1->id) {
+            return true;
+        }
+        return false;
+    }
 }
