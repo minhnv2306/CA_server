@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewPasswordRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
+use App\Helper\MessageHelper;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
@@ -16,37 +20,73 @@ class UserController extends Controller
             'users' => $users,
         ]);
     }
+    public function checkCreate(Request $request)
+    {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|min:6|confirmed',
+            ]);
+            if($validator->fails()){
+                return MessageHelper::errorResponse([],MessageHelper::getMessageErros($validator->errors()));
+            }
+            return MessageHelper::successResponse();
+    }
     public function store(UserRequest $request)
     {
+        $data = $request->except('password_confirmation');
+        $data['password'] = bcrypt($data['password']);
         try {
-            User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-            ]);
-            return redirect()->back()->with('messages', 'Tạo người dùng thành công');
+            User::create($data);
+            return redirect()->back()->with('messages', 'Tạo thành công');
         } catch (Exception $ex) {
             return redirect()->back()->with('errors', $ex->getMessage());
         }
-    }
-    public function roles()
-    {
-        dd(1);
     }
     public function update(User $user, Request $request)
     {
         try {
-            $user->update($request->all());
-            return redirect()->back()->with('messages', 'Cập nhật thành công!');
+            if (Auth::user()->can('edit', $user)) {
+                $user->update($request->all());
+                return redirect()->back()->with('messages', 'Cập nhật thành công!');
+            } else {
+                return view('error.403');
+            }
         } catch (Exception $ex) {
             return redirect()->back()->with('errors', $ex->getMessage());
         }
     }
+    public function profile()
+    {
+        return view('user.show', [
+            'user' => Auth::user(),
+        ]);
+    }
+    public function changePassword(NewPasswordRequest $request)
+    {
+        if (User::checkAccount(Auth::user()->email, $request['old_password'])) {
+            try {
+                User::find(Auth::user()->id)->update([
+                    'password' => bcrypt($request->new_password)
+                ]);
+                return redirect()->back()->with('messages', 'Đổi mật khẩu thành công!');
+            } catch (Exception $ex) {
+                return redirect()->back()->with('errors', $ex->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('errors', 'Thông tin mật khẩu chưa chính xác');
+        }
+
+    }
     public function destroy(User $user)
     {
         try {
-            $user->delete();
-            return redirect()->back()->with('messages', 'Xóa thành công!');
+            if (Auth::user()->can('edit', $user)) {
+                $user->delete();
+                return redirect()->back()->with('messages', 'Xóa thành công!');
+            } else {
+                return view('error.403');
+            }
         } catch (Exception $ex) {
             return redirect()->back()->with('errors', $ex->getMessage());
         }
