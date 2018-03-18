@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Cert;
-use App\User;
+use App\Models\Cert;
+use App\ModelsUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CertPolicy

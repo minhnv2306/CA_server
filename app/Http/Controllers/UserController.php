@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewPasswordRequest;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
@@ -81,7 +81,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         try {
-            if (Auth::user()->can('edit', $user)) {
+            if (Auth::user()->can('delete', $user)) {
                 $user->delete();
                 return redirect()->back()->with('messages', 'Xóa thành công!');
             } else {

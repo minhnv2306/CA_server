@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Cert;
-use App\Comment;
+use App\Models\Cert;
+use App\Models\Comment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;

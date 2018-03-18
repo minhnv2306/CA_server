@@ -7,7 +7,7 @@
                 Quản lý chứng thư
             </h1>
             <ol class="breadcrumb">
-                <li><a href="http://cert.local/admin"><i class="fa fa-dashboard"></i> Trang chủ</a>
+                <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a>
                 </li>
                 <li class="active">Quản lý chứng thư</li>
             </ol>

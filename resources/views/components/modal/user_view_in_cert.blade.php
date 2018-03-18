@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label for="sel1">Nơi làm việc:</label>
                     <select class="form-control" disabled>
-                        @foreach(\App\User::getAllWork() as $work)
+                        @foreach(\App\Models\User::getAllWork() as $work)
                             @if($user->work== $work)
                                 <option value="{{$work}}" selected>{{$work}}</option>
                             @else

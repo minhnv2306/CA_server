@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     public function certs()
     {
-        return $this->hasMany('App\Cert');
+        return $this->hasMany('App\Models\Cert');
     }
     public function comments()
     {

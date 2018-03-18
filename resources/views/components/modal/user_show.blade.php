@@ -40,7 +40,7 @@
                 <div class="form-group">
                     <label for="sel1">Nơi làm việc:</label>
                     <select class="form-control" name="work">
-                        @foreach(\App\User::getAllWork() as $work)
+                        @foreach(\App\Models\User::getAllWork() as $work)
                             @if($user->work== $work)
                                 <option value="{{$work}}" selected>{{$work}}</option>
                             @else
@@ -53,7 +53,7 @@
                     <div class="form-group">
                         <label for="sel1">Quyền:</label>
                         <select class="form-control" name="role_id">
-                            @foreach(\App\Role::getAllRole() as $role)
+                            @foreach(\App\Models\Role::getAllRole() as $role)
                                 @if($user->role_id == $role->id)
                                     <option value="{{$role->id}}" selected>{{$role->name}}</option>
                                 @else

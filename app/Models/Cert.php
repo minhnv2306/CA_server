@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,12 +10,18 @@ class Cert extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
     public function comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Models\Comment');
     }
+
+    /**
+     * Get base of list cert
+     * @param array $param
+     * @return $this
+     */
     public static function getBaseList($param = array())
     {
         $query = self::select('*')
@@ -25,6 +31,12 @@ class Cert extends Model
         }
         return $query;
     }
+
+    /**
+     * Get list certs with status (use or don't use)
+     * @param $status
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public static function getCertWithStatus($status)
     {
         $param = array(
@@ -32,11 +44,21 @@ class Cert extends Model
         );
         return self::getBaseList($param)->get();
     }
+
+    /**
+     * Get all cert in database
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public static function getAllCerts()
     {
-        return self::orderBy('id', 'desc')
+        return self::getBaseList()
             ->get();
     }
+
+    /**
+     * Get status of cert
+     * @return array
+     */
     public static function getStatus()
     {
         return array(
@@ -44,6 +66,12 @@ class Cert extends Model
             '1' => 'Còn hạn'
         );
     }
+
+    /**
+     * Get detail of 1 status
+     * @param $key
+     * @return mixed|string
+     */
     public static function getDetailStatus($key)
     {
         $status = self::getStatus();
@@ -52,11 +80,19 @@ class Cert extends Model
         }
         return '';
     }
+
+    /**
+     * Get list cert of between day
+     * @param $start_day
+     * @param $end_day
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public static function getCertBetweenDay($start_day, $end_day)
     {
-        return Cert::where([
-            ['created_at', '>=', $start_day],
-            ['created_at', '<=', $end_day],
-        ])->get();
+        return self::getBaseList()
+            ->where([
+                ['created_at', '>=', $start_day],
+                ['created_at', '<=', $end_day],
+            ])->get();
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cert;
+use App\Models\Cert;
 
 class HomeController extends Controller
 {

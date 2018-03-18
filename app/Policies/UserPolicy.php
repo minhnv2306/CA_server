@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -41,5 +41,9 @@ class UserPolicy
             return true;
         }
         return false;
+    }
+    public function delete(User $user1, User $user2)
+    {
+        return ($user1->role_id == 1 && $user2->role_id == 2);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +10,7 @@ class Comment extends Model
 
     public function cert()
     {
-        return $this->belongsTo('App\Cert');
+        return $this->belongsTo('App\Models\Cert');
     }
     public function user()
     {

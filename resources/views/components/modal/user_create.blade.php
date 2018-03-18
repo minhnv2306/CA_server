@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <label for="sel1">Nơi làm việc:</label>
                     <select class="form-control" name="work" id="role_id" required>
-                        @foreach(\App\User::getAllWork() as $work)
+                        @foreach(\App\Models\User::getAllWork() as $work)
                             <option value="{{$work}}">{{$work}}</option>
                         @endforeach
                     </select>
@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <label for="sel1">Quyền:</label>
                     <select class="form-control" name="role_id" id="role_id" required>
-                        @foreach(\App\Role::getAllRole() as $role)
+                        @foreach(\App\Models\Role::getAllRole() as $role)
                             <option value="{{$role->id}}">{{$role->name}}</option>
                         @endforeach
                     </select>
