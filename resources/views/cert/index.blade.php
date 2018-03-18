@@ -139,6 +139,39 @@
                 '<span class="label label-danger">Hết hạn</span>',
                 '<span class="label label-success">Còn hạn</span>',
             ];
+            $('.filterStatus').click(function () {
+                var status = $(this).attr('data-status');
+                $.ajax({
+                    url: 'certs/filter-status/' + status,
+                    type: 'GET',
+                    beforeSend: function () {
+                        $('#list-cert').waitMe({
+                            effect: 'bounce',
+                            text: '',
+                            bg: 'rgba(255,255,255,0.7)',
+                            color: '#000'
+                        });
+                    },
+                    success: function (result, status) {
+                        $('#list-cert').waitMe('hide');
+                        var datatable = $('#list-cert').DataTable();
+                        datatable.clear().draw();
+                        var dataTable = []
+
+                        result.forEach(function (data) {
+                            data.status = statusBtn[data.status];
+                            data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
+                                + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ' +
+                                '<a href="/certs/' + data.id + '" id="edit" class="btn btn-danger btn-xs">'
+                                + ' <i class="fa fa-pencil"> Thu hồi </i> </a> ';
+                            dataTable.push(Object.values(data));
+                        });
+                        datatable.rows.add(dataTable); // Add data to datatable, array
+                        datatable.columns.adjust().draw(); // Redraw the DataTable
+                        datatable.order([0, 'desc']).draw();
+                    }
+                })
+            })
 
             $('.evict').click(function (e) {
                 var r = confirm("Bạn có thực sự muốn thu hồi chứng thư này!");
