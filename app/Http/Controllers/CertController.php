@@ -81,17 +81,15 @@ class CertController extends Controller
         $CASubject = $subject->getDN();
 
         // create private key / x.509 cert for stunnel / website
-        // Ký cho các đối tượng nào
         $privKeySubject = new RSA();
         extract($privKeySubject->createKey());
         $privKeySubject->loadKey($privatekey);
 
         try {
-            /* Ghi ra USB
+            /* Ghi ra USB */
             $myfile = fopen("H:\privatekey.txt", "w");
             fwrite($myfile, $privatekey);
             fclose($myfile);
-            */
 
             $pubKeySubject = new RSA();
             $pubKeySubject->loadKey($publickey);
