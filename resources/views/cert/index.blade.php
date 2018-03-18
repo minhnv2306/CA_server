@@ -48,7 +48,7 @@
                                         <!-- filter theo ngay -->
                                         {!! Form::open([
                                             'route' => 'filterCert',
-                                            'moethod' => 'POST'
+                                            'method' => 'POST'
                                         ]) !!}
                                             <div class="input-group date">
                                                 <input type="text" id="date-start" name="startDate" autocomplete="off"
@@ -160,12 +160,11 @@
 
                         result.forEach(function (data) {
                             index = (data.status ? 1 : 0);
+                            console.log(index);
                             data.status = statusBtn[index];
                             if (index == 1) {
                                 data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
-                                    + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ' +
-                                    '<a href="/certs/' + data.id + '" id="edit" class="btn btn-danger btn-xs">'
-                                    + ' <i class="fa fa-pencil"> Thu hồi </i> </a> ';
+                                    + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ';
                             } else {
                                 data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
                                     + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ';
