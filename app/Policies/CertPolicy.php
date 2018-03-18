@@ -19,6 +19,10 @@ class CertPolicy
     {
         //
     }
+    public function create()
+    {
+        return true;
+    }
     public function edit(User $user, Cert $cert)
     {
         return $user->role_id === 1 || $cert->user_id === $user->id;
