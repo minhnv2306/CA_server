@@ -75,7 +75,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Email</th>
-                                        <th>Họ va tên</th>
+                                        <th>Họ và tên</th>
                                         <th>Số chứng minh thư</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
@@ -159,7 +159,8 @@
                         var dataTable = []
 
                         result.forEach(function (data) {
-                            data.status = statusBtn[data.status];
+                            index = (data.status ? 1 : 0);
+                            data.status = statusBtn[index];
                             data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
                                 + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ' +
                                 '<a href="/certs/' + data.id + '" id="edit" class="btn btn-danger btn-xs">'
