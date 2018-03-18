@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::group(['middleware' => 'auth'], function () {
 
@@ -31,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('certs/filter-status/{status}', 'CertController@getListByStatus');
     Route::post('cert/update', 'CertController@update')->name('cert.update');
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+    Route::get('/', 'HomeController@dashboard');
     Route::post('certs/filter', 'CertController@filter')->name('filterCert');
 });
 

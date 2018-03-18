@@ -161,10 +161,15 @@
                         result.forEach(function (data) {
                             index = (data.status ? 1 : 0);
                             data.status = statusBtn[index];
-                            data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
-                                + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ' +
-                                '<a href="/certs/' + data.id + '" id="edit" class="btn btn-danger btn-xs">'
-                                + ' <i class="fa fa-pencil"> Thu hồi </i> </a> ';
+                            if (index == 1) {
+                                data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
+                                    + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ' +
+                                    '<a href="/certs/' + data.id + '" id="edit" class="btn btn-danger btn-xs">'
+                                    + ' <i class="fa fa-pencil"> Thu hồi </i> </a> ';
+                            } else {
+                                data.action = '<a href="/certs/' + data.id + '" id="edit" class="btn btn-primary btn-xs">'
+                                    + ' <i class="fa fa-pencil"> Xem chi tiết </i> </a> ';
+                            }
                             dataTable.push(Object.values(data));
                         });
                         datatable.rows.add(dataTable); // Add data to datatable, array
