@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Cert;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,10 @@ class HomeController extends Controller
     }
     public function index()
     {
-        return view('home');
+
+        $cert = Cert::find(1)->toJson();
+        return view('home', [
+            'cert' => json_encode($cert)
+        ]);
     }
 }

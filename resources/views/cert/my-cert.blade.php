@@ -38,9 +38,10 @@
 
                                 <div class="row dataTables_wrapper form-inline dt-bootstrap no-footer">
                                     <div class="col-md-6 pull-left">
-                                        <a href="{{route('certs.index', ['status' => 0])}}" class="btn btn-danger">Hết hạn</a>
-                                        <a href="{{route('certs.index', ['status' => 1])}}" class="btn btn-success">Còn giá trị</a>
-                                        <a href="{{route('certs.index')}}" class="btn btn-default">Xem tất cả</a>
+                                        <button data-status="0" class="btn btn-danger filterStatus">Hết hạn</button>
+                                        <button data-status="1" class="btn btn-success filterStatus">Còn giá trị
+                                        </button>
+                                        <button data-status="2" class="btn btn-default filterStatus">Xem tất cả</button>
                                     </div>
 
                                     <div class="pull-right padding-right-15">
@@ -49,22 +50,22 @@
                                             'route' => 'filterCert',
                                             'method' => 'POST'
                                         ]) !!}
-                                            <div class="input-group date">
-                                                <input type="text" id="date-start" name="startDate" autocomplete="off"
-                                                       class="form-control pull-left" required placeholder="From">
-                                                <div id="start" class="input-group-addon btn btn-default">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
+                                        <div class="input-group date">
+                                            <input type="text" id="date-start" name="startDate" autocomplete="off"
+                                                   class="form-control pull-left" required placeholder="From">
+                                            <div id="start" class="input-group-addon btn btn-default">
+                                                <i class="fa fa-calendar"></i>
                                             </div>
-                                            <div class="input-group date">
-                                                <input type="text" id="date-end" name="endDate" autocomplete="off"
-                                                       class="form-control pull-left" required placeholder="To">
-                                                <div id="end" class="input-group-addon btn btn-default">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
+                                        </div>
+                                        <div class="input-group date">
+                                            <input type="text" id="date-end" name="endDate" autocomplete="off"
+                                                   class="form-control pull-left" required placeholder="To">
+                                            <div id="end" class="input-group-addon btn btn-default">
+                                                <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="submit" class="btn btn-default"
-                                                   value="Filter">
+                                        </div>
+                                        <input type="submit" class="btn btn-default"
+                                               value="Filter">
                                         </form>
                                     </div>
                                 </div>
@@ -78,7 +79,6 @@
                                         <th>Số chứng minh thư</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
-                                        <th>Người tạo</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
@@ -98,20 +98,21 @@
                                             </td>
                                             <td>{{$cert->created_at}}</td>
                                             <td>
-                                                @php
-                                                    $user = $cert->user;
-                                                @endphp
-                                                <!-- Trigger the modal with a button -->
-                                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#showUser{{$user->id}}">{{$cert->user->name}}</button>
-
-                                            </td>
-                                            <!-- Modal -->
-                                            @include('components.modal.user_view_in_cert')
-                                            <td>
                                                 <a href="{{route('certs.show', ['cert' => $cert->id])}}"
                                                    class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi
                                                     tiết
                                                 </a>
+                                                @if ($cert->status == 1 && \Illuminate\Support\Facades\Auth::user()->can('edit', $cert))
+                                                    {!! Form::open([
+                                                        'route' => ['certs.destroy', 'cert' => $cert->id],
+                                                        'method' => 'delete',
+                                                        'class' => 'inline'
+                                                    ]) !!}
+                                                    <button class="btn btn-danger btn-xs evict"><i
+                                                                class="fa fa-trash"></i> Thu hồi
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -191,7 +192,7 @@
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
             $('.cert').addClass('active');
-            $('.all-cert').addClass('active');
+            $('.my-cert').addClass('active');
         });
     </script>
 

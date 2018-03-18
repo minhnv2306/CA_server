@@ -24,10 +24,21 @@ class CertController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!isset($request->status)) {
+            $certs = Cert::getAllCerts();
+        } else {
+            $certs = Cert::getCertWithStatus($request->status);
+        }
         return view('cert.index', [
-            'certs' => Cert::getAllCerts(),
+            'certs' => $certs,
+        ]);
+    }
+    public function getMyCert()
+    {
+        return view('cert.my-cert', [
+            'certs' => Auth::user()->certs,
         ]);
     }
 

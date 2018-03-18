@@ -41,7 +41,8 @@
                             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="cert"><a href="{{route('certs.index')}}"><i class="fa fa-circle-o"></i>Chứng thư số cá nhân</a></li>
+                    <li class="all-cert"><a href="{{route('certs.index')}}"><i class="fa fa-circle-o"></i>Tất cả chứng thư số</a></li>
+                    <li class="my-cert"><a href="{{route('certs.my-cert')}}"><i class="fa fa-circle-o"></i>Chứng thư số tôi phát hành</a></li>
                 </ul>
             </li>
             <li class="treeview ">

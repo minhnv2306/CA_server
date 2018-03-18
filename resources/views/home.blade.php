@@ -389,6 +389,30 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        <script>
+            var data = [
+                ['Foo', 'programmer'],
+                ['Bar', 'bus driver'],
+                ['Moo', 'Reindeer Hunter']
+            ];
+            function download_csv() {
+                var csv = 'Name,Title\n';
+                data.forEach(function(row) {
+                    csv += row.join(',');
+                    csv += "\n";
+                });
+                var content = JSON.parse({!! $cert !!});
+                console.log(csv);
+                console.log(content.content);
+                var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(content.content);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = 'people.txt';
+                hiddenElement.click();
+            }
+        </script>
+
+        <button onclick="download_csv()">Download CSV</button>
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -918,6 +942,8 @@
     barChartOptions.datasetFill = false
     barChart.Bar(barChartData, barChartOptions)
   })
+</script>
+<script>
 </script>
 </body>
 </html>

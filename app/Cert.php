@@ -16,6 +16,22 @@ class Cert extends Model
     {
         return $this->hasMany('App\Comment');
     }
+    public static function getBaseList($param = array())
+    {
+        $query = self::select('*')
+            ->orderBy('id', 'desc');
+        if (isset($param['status'])) {
+            $query = $query->where('status', $param['status']);
+        }
+        return $query;
+    }
+    public static function getCertWithStatus($status)
+    {
+        $param = array(
+            'status' => $status
+        );
+        return self::getBaseList($param)->get();
+    }
     public static function getAllCerts()
     {
         return self::orderBy('id', 'desc')
