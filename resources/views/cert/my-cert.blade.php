@@ -7,7 +7,7 @@
                 Quản lý chứng thư
             </h1>
             <ol class="breadcrumb">
-                <li><a href="http://cert.local/admin"><i class="fa fa-dashboard"></i> Trang chủ</a>
+                <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a>
                 </li>
                 <li class="active">Quản lý chứng thư</li>
             </ol>
@@ -38,10 +38,11 @@
 
                                 <div class="row dataTables_wrapper form-inline dt-bootstrap no-footer">
                                     <div class="col-md-6 pull-left">
-                                        <button data-status="0" class="btn btn-danger filterStatus">Hết hạn</button>
-                                        <button data-status="1" class="btn btn-success filterStatus">Còn giá trị
-                                        </button>
-                                        <button data-status="2" class="btn btn-default filterStatus">Xem tất cả</button>
+                                        <a href="{{route('certs.my-cert', ['status' => 0])}}" class="btn btn-danger">Hết
+                                            hạn</a>
+                                        <a href="{{route('certs.my-cert', ['status' => 1])}}" class="btn btn-success">Còn
+                                            giá trị</a>
+                                        <a href="{{route('certs.my-cert')}}" class="btn btn-default">Xem tất cả</a>
                                     </div>
 
                                     <div class="pull-right padding-right-15">
@@ -64,8 +65,7 @@
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="submit" class="btn btn-default"
-                                               value="Filter">
+                                        <input type="submit" class="btn btn-default" value="Filter">
                                         </form>
                                     </div>
                                 </div>
@@ -79,6 +79,7 @@
                                         <th>Số chứng minh thư</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
+                                        <th>Người tạo</th>
                                         <th>Hành động</th>
                                     </tr>
                                     </thead>
@@ -98,21 +99,34 @@
                                             </td>
                                             <td>{{$cert->created_at}}</td>
                                             <td>
+                                            @php
+                                                $user = $cert->user;
+                                            @endphp
+                                            <!-- Trigger the modal with a button -->
+                                                <button type="button" class="btn btn-link" data-toggle="modal"
+                                                        data-target="#showUser{{$user->id}}">{{$cert->user->name}}</button>
+
+                                            </td>
+                                            <!-- Modal -->
+                                            @include('components.modal.user_view_in_cert')
+                                            <td>
                                                 <a href="{{route('certs.show', ['cert' => $cert->id])}}"
                                                    class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi
                                                     tiết
                                                 </a>
-                                                @if ($cert->status == 1 && \Illuminate\Support\Facades\Auth::user()->can('edit', $cert))
-                                                    {!! Form::open([
-                                                        'route' => ['certs.destroy', 'cert' => $cert->id],
-                                                        'method' => 'delete',
-                                                        'class' => 'inline'
-                                                    ]) !!}
-                                                    <button class="btn btn-danger btn-xs evict"><i
-                                                                class="fa fa-trash"></i> Thu hồi
-                                                    </button>
-                                                    {!! Form::close() !!}
-                                                @endif
+                                                @can('edit', $cert)
+                                                    @if ($cert->status == 1)
+                                                        {!! Form::open([
+                                                            'route' => ['certs.destroy', 'cert' => $cert->id],
+                                                            'method' => 'DELETE',
+                                                            'class' => 'inline'
+                                                        ]) !!}
+                                                        <button class="btn btn btn-danger btn-xs">
+                                                            <i class="fa fa-trash"></i> Thu hồi
+                                                        </button>
+                                                        {!! Form::close() !!}
+                                                    @endif
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach

@@ -34,13 +34,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@dashboard');
     Route::post('certs/filter', 'CertController@filter')->name('filterCert');
 
+    Route::get('ca-information', 'HomeController@getCA')->name('ca');
+
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/test', function (){
-    return view('test');
+Route::get('/test/{user}', function (App\Models\User $user){
+    dd($user);
 });
+Route::post('/test', 'HomeController@test');
 

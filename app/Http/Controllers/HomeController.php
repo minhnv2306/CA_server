@@ -34,4 +34,12 @@ class HomeController extends Controller
             'cert' => json_encode($cert)
         ]);
     }
+    public function test(Request $request)
+    {
+        dd($request->all());
+    }
+    public function getCA()
+    {
+        return view('ca');
+    }
 }

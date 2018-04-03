@@ -37,22 +37,35 @@ class Cert extends Model
      * @param $status
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getCertWithStatus($status)
+    public static function getCertWithStatus($status, $user = null)
     {
         $param = array(
             'status' => $status
         );
-        return self::getBaseList($param)->get();
+        if (empty($user)) {
+            return self::getBaseList($param)
+                ->get();
+        } else {
+            return self::getBaseList($param)
+                ->where('user_id', $user->id)
+                ->get();
+        }
     }
 
     /**
      * Get all cert in database
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getAllCerts()
+    public static function getAllCerts($user = null)
     {
-        return self::getBaseList()
-            ->get();
+        if (empty($user)) {
+            return self::getBaseList()
+                ->get();
+        } else {
+            return self::getBaseList()
+                ->where('user_id', $user->id)
+                ->get();
+        }
     }
 
     /**

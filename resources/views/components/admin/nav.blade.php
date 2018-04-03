@@ -2,9 +2,9 @@
     <!-- Logo -->
     <a href="http://cert.local/admin" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>W</b>U</span>
+        <span class="logo-mini"><b>M</b>I</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b></b></span>
+        <span class="logo-lg"><b>My Project</b></span>
     </a>
 
     <!-- Header Navbar -->

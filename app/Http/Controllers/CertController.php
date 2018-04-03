@@ -35,10 +35,15 @@ class CertController extends Controller
             'certs' => $certs,
         ]);
     }
-    public function getMyCert()
+    public function getMyCert(Request $request)
     {
+        if (!isset($request->status)) {
+            $certs = Cert::getAllCerts(Auth::user());
+        } else {
+            $certs = Cert::getCertWithStatus($request->status, Auth::user());
+        }
         return view('cert.my-cert', [
-            'certs' => Auth::user()->certs,
+            'certs' => $certs,
         ]);
     }
 
@@ -98,9 +103,9 @@ class CertController extends Controller
 
         try {
             /* Ghi ra USB */
-            $myfile = fopen("H:\privatekey.txt", "w");
-            fwrite($myfile, $privatekey);
-            fclose($myfile);
+//            $myfile = fopen("H:\privatekey.txt", "w");
+//            fwrite($myfile, $privatekey);
+//            fclose($myfile);
 
             $pubKeySubject = new RSA();
             $pubKeySubject->loadKey($publickey);
@@ -211,13 +216,20 @@ class CertController extends Controller
      */
     public function destroy(Cert $cert)
     {
+        DB::beginTransaction();
         try {
             $cert->update([
                 'status' => 0,
             ]);
-
+            Comment::create([
+                'content' => 'Thu hồi',
+                'cert_id' => $cert->id,
+                'user_id' => Auth::user()->id,
+            ]);
+            DB::commit();
             return redirect()->route('certs.index')->with('messages', 'Thu hồi thành công');
         } catch (Exception $ex) {
+            DB::rollback();
             return redirect()->route('certs.index')->with('errors', 'Không thể thu hồi');
         }
     }

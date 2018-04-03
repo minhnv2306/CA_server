@@ -38,8 +38,10 @@
 
                                 <div class="row dataTables_wrapper form-inline dt-bootstrap no-footer">
                                     <div class="col-md-6 pull-left">
-                                        <a href="{{route('certs.index', ['status' => 0])}}" class="btn btn-danger">Hết hạn</a>
-                                        <a href="{{route('certs.index', ['status' => 1])}}" class="btn btn-success">Còn giá trị</a>
+                                        <a href="{{route('certs.index', ['status' => 0])}}" class="btn btn-danger">Hết
+                                            hạn</a>
+                                        <a href="{{route('certs.index', ['status' => 1])}}" class="btn btn-success">Còn
+                                            giá trị</a>
                                         <a href="{{route('certs.index')}}" class="btn btn-default">Xem tất cả</a>
                                     </div>
 
@@ -49,22 +51,21 @@
                                             'route' => 'filterCert',
                                             'method' => 'POST'
                                         ]) !!}
-                                            <div class="input-group date">
-                                                <input type="text" id="date-start" name="startDate" autocomplete="off"
-                                                       class="form-control pull-left" required placeholder="From">
-                                                <div id="start" class="input-group-addon btn btn-default">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
+                                        <div class="input-group date">
+                                            <input type="text" id="date-start" name="startDate" autocomplete="off"
+                                                   class="form-control pull-left" required placeholder="From">
+                                            <div id="start" class="input-group-addon btn btn-default">
+                                                <i class="fa fa-calendar"></i>
                                             </div>
-                                            <div class="input-group date">
-                                                <input type="text" id="date-end" name="endDate" autocomplete="off"
-                                                       class="form-control pull-left" required placeholder="To">
-                                                <div id="end" class="input-group-addon btn btn-default">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
+                                        </div>
+                                        <div class="input-group date">
+                                            <input type="text" id="date-end" name="endDate" autocomplete="off"
+                                                   class="form-control pull-left" required placeholder="To">
+                                            <div id="end" class="input-group-addon btn btn-default">
+                                                <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="submit" class="btn btn-default"
-                                                   value="Filter">
+                                        </div>
+                                        <input type="submit" class="btn btn-default" value="Filter">
                                         </form>
                                     </div>
                                 </div>
@@ -98,11 +99,12 @@
                                             </td>
                                             <td>{{$cert->created_at}}</td>
                                             <td>
-                                                @php
-                                                    $user = $cert->user;
-                                                @endphp
-                                                <!-- Trigger the modal with a button -->
-                                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#showUser{{$user->id}}">{{$cert->user->name}}</button>
+                                            @php
+                                                $user = $cert->user;
+                                            @endphp
+                                            <!-- Trigger the modal with a button -->
+                                                <button type="button" class="btn btn-link" data-toggle="modal"
+                                                        data-target="#showUser{{$user->id}}">{{$cert->user->name}}</button>
 
                                             </td>
                                             <!-- Modal -->
@@ -112,6 +114,19 @@
                                                    class="btn btn-primary btn-xs"> <i class="fa fa-pencil"></i> Xem chi
                                                     tiết
                                                 </a>
+                                                @can('edit', $cert)
+                                                    @if ($cert->status == 1)
+                                                        {!! Form::open([
+                                                            'route' => ['certs.destroy', 'cert' => $cert->id],
+                                                            'method' => 'DELETE',
+                                                            'class' => 'inline'
+                                                        ]) !!}
+                                                        <button class="btn btn btn-danger btn-xs">
+                                                            <i class="fa fa-trash"></i> Thu hồi
+                                                        </button>
+                                                        {!! Form::close() !!}
+                                                    @endif
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
