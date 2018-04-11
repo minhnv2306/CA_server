@@ -36,14 +36,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('ca-information', 'HomeController@getCA')->name('ca');
 
+
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/test/{user}', function (App\Models\User $user){
-    dd($user);
-});
-Route::post('/test', 'HomeController@test');
+Route::get('/test', 'HomeController@test');
 

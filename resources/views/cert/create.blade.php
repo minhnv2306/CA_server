@@ -35,29 +35,29 @@
                                             <div class="row">
                                                 <div class="form-group col-sm-12">
                                                     <label for="email">Họ và tên(*): </label>
-                                                    <input class="form-control" name="name" required>
+                                                    <input class="form-control" name="name" required value="{{old('name')}}">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-sm-6">
                                                     <label for="email">Email:</label>
-                                                    <input type="email" class="form-control" name="email">
+                                                    <input type="email" class="form-control" name="email" value="{{old('email')}}">
                                                 </div>
                                                 <div class="form-group col-sm-6">
                                                     <label for="email">Số điện thoại:</label>
-                                                    <input type="number" class="form-control" name="phone_number">
+                                                    <input type="number" class="form-control" name="phone_number" value="{{old('phone_number')}}">
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="form-group col-sm-4">
                                                     <label for="email">Số chứng minh thư(*):</label>
-                                                    <input type="text" class="form-control" name="identification_card" required>
+                                                    <input type="text" class="form-control" name="identification_card" required value="{{old('identification_card')}}">
                                                 </div>
                                                 <div class="form-group col-sm-4">
                                                     <label for="email">Ngày cấp(*):</label>
                                                     <div class='input-group date' id='datetimepicker1'>
-                                                        <input type='text' class="form-control" name="date_create_id_cart" required/>
+                                                        <input type='text' class="form-control" name="date_create_id_cart" required value="{{old('date_create_id_cart')}}"/>
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>
@@ -72,7 +72,7 @@
                                             <div class="row">
                                                 <div class="form-group col-sm-12">
                                                     <label for="email">Địa chỉ làm việc:</label>
-                                                    <input type="text" class="form-control" name="organizationname">
+                                                    <input type="text" class="form-control" name="organizationname"  value="{{old('organizationname')}}">
                                                 </div>
                                             </div>
                                             <div class="row product">

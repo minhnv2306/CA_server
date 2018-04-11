@@ -81,7 +81,7 @@
                                     <tr>
                                         <td class="width-200">Nội dung</td>
                                         <td class="padding-left-0">
-                                            <strong>{{$certInfor['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']}}</strong>
+                                            <strong>{{$key}}</strong>
                                         </td>
                                     </tr>
                                     <tr>

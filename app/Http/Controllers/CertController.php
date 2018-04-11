@@ -80,37 +80,26 @@ class CertController extends Controller
         }
 
         $endDay = $endYear . '/' . $now->month . '/' . $now->day;
-        $CAPrivKey = new RSA();
-        $CAPrivKey->loadKey(CertController::privateKey);
-
-        $pubKey = new RSA();
-        $pubKey->loadKey(CertController::publicKey);
-
-        // Information CA
-
-        $subject = new X509();
-        $subject->setPublicKey($pubKey);
-        $subject->setDNProp('id-at-organizationName', 'HUST');
-        $subject->setDNProp('countryname', 'Vietnam');
-        $subject->setDNProp('commonname', 'Minh NV Cert');
-
-        $CASubject = $subject->getDN();
-
-        // create private key / x.509 cert for stunnel / website
-        $privKeySubject = new RSA();
-        extract($privKeySubject->createKey());
-        $privKeySubject->loadKey($privatekey);
-
         try {
-            /* Ghi ra USB */
-//            $myfile = fopen("H:\privatekey.txt", "w");
-//            fwrite($myfile, $privatekey);
-//            fclose($myfile);
+            // Create key object for CA
+            $CAPrivKey = new RSA();
+            $CAPrivKey->loadKey(CertController::privateKey);
+
+            $CApubKey = new RSA();
+            $CApubKey->loadKey(CertController::publicKey);
+
+
+
+            // create private key / x.509 cert for stunnel / website, subject
+            $privKeySubject = new RSA();
+            extract($privKeySubject->createKey());
+            $privKeySubject->loadKey($privatekey);
 
             $pubKeySubject = new RSA();
             $pubKeySubject->loadKey($publickey);
             $pubKeySubject->setPublicKey();
 
+            // Subject information
             $subject = new X509();
             $subject->setPublicKey($pubKeySubject);
             $subject->setDNProp('cn', $request->name);
@@ -121,16 +110,20 @@ class CertController extends Controller
             $subject->setDNProp('id-emailaddress', $request->email);
             $subject->setDNProp('o', $request->organizationname);
 
+            // Information CA
             $issuer = new X509();
             $issuer->setPrivateKey($CAPrivKey);
-            $issuer->setDN($CASubject);
+            $issuer->setPublicKey($CApubKey);
+            $issuer->setDNProp('id-at-organizationName', 'HUST');
+            $issuer->setDNProp('countryname', 'Vietnam');
+            $issuer->setDNProp('commonname', 'Minh NV Cert');
 
             $x509 = new X509();
             $x509->setStartDate($startDay);
             $x509->setEndDate($endDay);
             $x509->setSerialNumber(chr(1));
-
-
+            $hehe = str_replace("\r","",$privatekey);
+            $hehe = str_replace("\n", "", $hehe);
             $result = $x509->sign($issuer, $subject);
 //            echo "the stunnel.pem contents are as follows:\r\n\r\n";
 //            echo "<br>";
@@ -138,6 +131,7 @@ class CertController extends Controller
 //            echo "\r\n";
 //            echo "<br>";
             $data = $x509->saveX509($result);
+
             Cert::create([
                 'content' => $data,
                 'email' => $request->email,
@@ -148,11 +142,12 @@ class CertController extends Controller
                 'date_create_id_cart' => $request->date_create_id_cart,
                 'address' => $request->ward . ', ' . $request->district . ', ' . $request->province,
             ]);
-
-            return redirect()->route('certs.index')->with('messages', 'Thêm thành công');
+            return view('cert.download', [
+                'private_key' => json_encode($hehe),
+            ]);
+            //return redirect()->route('certs.index')->with('messages', 'Thêm thành công');
         } catch (Exception $e) {
-            dd($e);
-            echo "Hay ket noi voi USB";
+
             return redirect()->route('certs.index')->with('errors', 'Thêm thất bại');
         }
     }
@@ -170,12 +165,15 @@ class CertController extends Controller
         $x509->loadCA(self::certCA);
         $certInfor = $x509->loadX509($cert->content);
 
+        $myCert = new X509();
+        $myCert->loadX509($cert->content);
+        $key = $myCert->getPublicKey();
         // print_r($certInfor['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']);
         // echo "<br>";
         // Check Cert
         // echo $x509->validateSignature() ? 'valid' : 'invalid';
 
-        return view('cert.show', compact('cert', 'certInfor', 'comments'));
+        return view('cert.show', compact('cert', 'certInfor', 'comments', 'key'));
     }
 
 
