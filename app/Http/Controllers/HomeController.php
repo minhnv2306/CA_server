@@ -34,6 +34,7 @@ class HomeController extends Controller
     {
         return view('dashboard');
     }
+
     public function index()
     {
 
@@ -42,67 +43,44 @@ class HomeController extends Controller
             'cert' => json_encode($cert)
         ]);
     }
+
     public function test(Request $request)
     {
-        // create private key / x.509 cert for stunnel / website
-        $privKey = new RSA();
-        extract($privKey->createKey());
-        $privKey->loadKey($privatekey);
+        // $data and $signature are assumed to contain the data and the signature
 
-        $pubKey = new RSA();
-        $pubKey->loadKey($publickey);
-        $pubKey->setPublicKey();
+// fetch public key from certificate and ready it
+        $pubkeyid = openssl_pkey_get_public("-----BEGIN CERTIFICATE-----
+MIIBvTCCASYCCQD55fNzc0WF7TANBgkqhkiG9w0BAQUFADAjMQswCQYDVQQGEwJK
+UDEUMBIGA1UEChMLMDAtVEVTVC1SU0EwHhcNMTAwNTI4MDIwODUxWhcNMjAwNTI1
+MDIwODUxWjAjMQswCQYDVQQGEwJKUDEUMBIGA1UEChMLMDAtVEVTVC1SU0EwgZ8w
+DQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANGEYXtfgDRlWUSDn3haY4NVVQiKI9Cz
+Thoua9+DxJuiseyzmBBe7Roh1RPqdvmtOHmEPbJ+kXZYhbozzPRbFGHCJyBfCLzQ
+fVos9/qUQ88u83b0SFA2MGmQWQAlRtLy66EkR4rDRwTj2DzR4EEXgEKpIvo8VBs/
+3+sHLF3ESgAhAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAEZ6mXFFq3AzfaqWHmCy1
+ARjlauYAa8ZmUFnLm0emg9dkVBJ63aEqARhtok6bDQDzSJxiLpCEF6G4b/Nv/M/M
+LyhP+OoOTmETMegAVQMq71choVJyOFE5BtQa6M/lCHEOya5QUfoRF2HF9EjRF44K
+3OK+u3ivTSj3zwjtpudY5Xo=
+-----END CERTIFICATE-----
+");
 
-        $subject = new X509();
-        $subject->setPublicKey($pubKey);
-        $subject->setDNProp('id-at-organizationName', 'phpseclib demo cert');
-        $subject->setDomain('www.whatever.com');
-
-        $issuer = new X509();
-        $issuer->setPrivateKey($privKey);
-        $issuer->setDN($subject->getDN());
-
-        $x509 = new X509();
-//$x509->setStartDate('-1 month'); // default: now
-//$x509->setEndDate('+1 year'); // default: +1 year
-//$x509->setSerialNumber(chr(1)); // default: 0
-
-        $result = $x509->sign($issuer, $subject);
-        echo "the stunnel.pem contents are as follows: <br/>";
-        echo $privKey->getPrivateKey();
-        echo "<br/>";
-        echo $publickey;
-        echo "<br/>";
-        echo $x509->saveX509($result);
-        echo "<br/>";
-
-        echo "<br>";
-        // Check Cert
-        $x5091 = new X509();
-        $x5091->loadCA(CertController::certCA);
-        $cert = $x5091->loadX509($x509->saveX509($result));
-
-        echo $x5091->validateSignature() ? 'valid' : 'invalid';
-        echo "<br/>";
-        $hehe = new X509();
-        $hehe->loadX509('-----BEGIN CERTIFICATE-----
-MIICIjCCAYugAwIBAgIBATANBgkqhkiG9w0BAQUFADA4MQ0wCwYDVQQKDARIVVNU
-MRAwDgYDVQQGDAdWaWV0bmFtMRUwEwYDVQQDDAxNaW5oIE5WIENlcnQwHhcNMTgw
-NDExMDAwMDAwWhcNMTkwNDExMDAwMDAwWjB2MRswGQYDVQQDDBJOZ3V54buFbiBW
-xINuIE1pbmgxGjAYBgNVBAgMEUhvw6BuZyBWxINuIFRo4bulMRMwEQYDVQQGDApI
-b8OgbmcgTWFpMSYwJAYJKoZIhvcNAQkBDBdtaW5oMTEwMUBnbWFpbC5jb20xMTEx
-MTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA1zayWWTxToDBrZin7AUMoU7U
-53iHG06fA62arFZmLT+2EfhEaYwySQlKxjagQf275qqYoHkGxZIp1hkD2TNvEwiz
-4UPMnHrVDHzAZOxtPFcWXeutTYUxQXAdMCzVSPCcKDkr7MnqZiV0O9mrwuQBWj4j
-TBunz8YxWVwWZ6s9becCAwEAATANBgkqhkiG9w0BAQUFAAOBgQBhXS7xHO2AehhH
-QuGeOsaXkD7gBBoP4R87J8I4rn4qNVUGyyuuDTPtKRMhMwbY3OQZNKmIJyEoRgIm
-ToDXAerJaHvY0xFFuiY6ppkw/CT2KNOVcSgJLBkBsjt9c7TjYRkHyX7dVZEtUVJr
-A7wVWqG5NA1EuhMX6b50G8ecQ3vhGw==
------END CERTIFICATE-----');
-        echo $hehe->getPublicKey();
+// state whether signature is okay or not
+        $ok = openssl_verify('aaa', hex2bin('6f7df91d8f973a0619d525c319337741130b77b21f9667dc7d1d74853b644cbe5e6b0e84aacc2faee883d43affb811fc653b67c38203d4f206d1b838c4714b6b2cf17cd621303c21bac96090df3883e58784a0576e501c10cdefb12b6bf887e548f6b07b09ae80d8416151d7dab7066d645e2eee57ac5f7af2a70ee0724c8e47'), $pubkeyid);
+        if ($ok == 1) {
+            echo "good";
+        } elseif ($ok == 0) {
+            echo "bad";
+        } else {
+            echo "ugly, error checking signature";
+        }
+        //return view('test');
     }
+
     public function getCA()
     {
         return view('ca');
+    }
+    public function form(Request $request)
+    {
+        dd($request->all());
     }
 }

@@ -45,3 +45,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/test', 'HomeController@test');
 
+Route::get('/form', function () {
+    return view('form');
+});
+Route::post('/form', 'HomeController@form');
+Route::post('/checkCert', 'CertController@checkCert');
+

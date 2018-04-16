@@ -29,9 +29,8 @@
     }
 
     // Generate download of hello.txt file with some content
-    var text = "{!! json_decode($private_key) !!}";
-    var filename = 'private.pem';
-
-    download(filename, text);
+    var text = "{!! json_decode($private_key) !!}" + "\n" + "{!! json_decode($cert) !!}";
+    var filecert = 'cert.pem';
+    download(filecert, text);
 </script>
 </html>

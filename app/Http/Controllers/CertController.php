@@ -122,18 +122,17 @@ class CertController extends Controller
             $x509->setStartDate($startDay);
             $x509->setEndDate($endDay);
             $x509->setSerialNumber(chr(1));
-            $hehe = str_replace("\r","",$privatekey);
-            $hehe = str_replace("\n", "", $hehe);
+            $privatekey = str_replace("\r","",$privatekey);
+            $privatekey = str_replace("\n", "", $privatekey);
             $result = $x509->sign($issuer, $subject);
 //            echo "the stunnel.pem contents are as follows:\r\n\r\n";
 //            echo "<br>";
 //            echo $privKeySubject->getPrivateKey();
 //            echo "\r\n";
 //            echo "<br>";
-            $data = $x509->saveX509($result);
-
+            $cert = $x509->saveX509($result);
             Cert::create([
-                'content' => $data,
+                'content' => $cert,
                 'email' => $request->email,
                 'customer_name' => $request->name,
                 'user_id' => Auth::user()->id,
@@ -142,8 +141,11 @@ class CertController extends Controller
                 'date_create_id_cart' => $request->date_create_id_cart,
                 'address' => $request->ward . ', ' . $request->district . ', ' . $request->province,
             ]);
+            $cert = str_replace("\n","",$cert);
+            $cert = str_replace("\r","",$cert);
             return view('cert.download', [
-                'private_key' => json_encode($hehe),
+                'private_key' => json_encode($privatekey),
+                'cert' => json_encode($cert)
             ]);
             //return redirect()->route('certs.index')->with('messages', 'Thêm thành công');
         } catch (Exception $e) {
@@ -259,5 +261,13 @@ class CertController extends Controller
         return view('cert.index', [
             'certs' => $certs,
         ]);
+    }
+
+    public function checkCert(Request $request)
+    {
+        $x509 = new X509();
+        $x509->loadCA(self::certCA);
+        $x509->loadX509($request->cert);
+        return $x509->validateSignature() ? 1 : 0;
     }
 }
