@@ -49,22 +49,12 @@ class HomeController extends Controller
         // $data and $signature are assumed to contain the data and the signature
 
 // fetch public key from certificate and ready it
-        $pubkeyid = openssl_pkey_get_public("-----BEGIN CERTIFICATE-----
-MIIBvTCCASYCCQD55fNzc0WF7TANBgkqhkiG9w0BAQUFADAjMQswCQYDVQQGEwJK
-UDEUMBIGA1UEChMLMDAtVEVTVC1SU0EwHhcNMTAwNTI4MDIwODUxWhcNMjAwNTI1
-MDIwODUxWjAjMQswCQYDVQQGEwJKUDEUMBIGA1UEChMLMDAtVEVTVC1SU0EwgZ8w
-DQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANGEYXtfgDRlWUSDn3haY4NVVQiKI9Cz
-Thoua9+DxJuiseyzmBBe7Roh1RPqdvmtOHmEPbJ+kXZYhbozzPRbFGHCJyBfCLzQ
-fVos9/qUQ88u83b0SFA2MGmQWQAlRtLy66EkR4rDRwTj2DzR4EEXgEKpIvo8VBs/
-3+sHLF3ESgAhAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAEZ6mXFFq3AzfaqWHmCy1
-ARjlauYAa8ZmUFnLm0emg9dkVBJ63aEqARhtok6bDQDzSJxiLpCEF6G4b/Nv/M/M
-LyhP+OoOTmETMegAVQMq71choVJyOFE5BtQa6M/lCHEOya5QUfoRF2HF9EjRF44K
-3OK+u3ivTSj3zwjtpudY5Xo=
------END CERTIFICATE-----
+        $pubkeyid = openssl_pkey_get_public("-----BEGIN CERTIFICATE-----MIICIjCCAYugAwIBAgIBATANBgkqhkiG9w0BAQUFADA4MQ0wCwYDVQQKDARIVVNUMRAwDgYDVQQGDAdWaWV0bmFtMRUwEwYDVQQDDAxNaW5oIE5WIENlcnQwHhcNMTgwNDE3MDAwMDAwWhcNMTkwNDE3MDAwMDAwWjB2MRswGQYDVQQDDBJOZ3V54buFbiBWxINuIE1pbmgxGjAYBgNVBAgMEUhvw6BuZyBWxINuIFRo4bulMRMwEQYDVQQGDApIb8OgbmcgTWFpMSYwJAYJKoZIhvcNAQkBDBdtaW5oMTEwMkBnbWFpbC5jb21hc2RhZDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA44rFR0xoIyGC9nE4FKuQ9I8Jr0J1oWZPRDbo0pjXSb+LbofCL0Z8doskBaW4nASHPk7+Yrr0KVumCXwRFRbwad1goBmq+LFMCGqeWU3ny/uTiURTwNWOV/nZg9BuvJHWIAeJsmYFChGE5yaH9TwXdLquYUO3PiTOQtC/5lxqnc0CAwEAATANBgkqhkiG9w0BAQUFAAOBgQBnZXizvw08GIStbp1bOa4f3wH5ZyzvpiZtrV6DKAC95Q4uPYUYBaQMQpBIgZDfHZIl94W5EQTWexJ7NDBrzMQWn0oUvw/8VNGRzR8gv0D8s6kZXnBz6eByE4p04q9xOdsIPWKaJG7qSgZhVaoGuoG3vrlgU/SNMdWVqZDvopvAGw==-----END CERTIFICATE-----
 ");
+        dd($pubkeyid);
 
 // state whether signature is okay or not
-        $ok = openssl_verify('aaa', hex2bin('6f7df91d8f973a0619d525c319337741130b77b21f9667dc7d1d74853b644cbe5e6b0e84aacc2faee883d43affb811fc653b67c38203d4f206d1b838c4714b6b2cf17cd621303c21bac96090df3883e58784a0576e501c10cdefb12b6bf887e548f6b07b09ae80d8416151d7dab7066d645e2eee57ac5f7af2a70ee0724c8e47'), $pubkeyid);
+        $ok = openssl_verify('aaa', hex2bin('95619e8623866ae06a2c908a4a0a7e56d0bf83763f0055cf5d8c38066655a871da18f29be8bd0e8f48076355d6cf19f39171839925c247d026f7e6b35ea921f4de567ad6bdb3c1ecfb758343040d8c93c2d7a3ace433824e95f672390c5649162618228754fa7e2d5f30c1122e40c4a0af9771c4832ce06de17cc1c86326cc95'), $pubkeyid);
         if ($ok == 1) {
             echo "good";
         } elseif ($ok == 0) {
@@ -81,6 +71,17 @@ LyhP+OoOTmETMegAVQMq71choVJyOFE5BtQa6M/lCHEOya5QUfoRF2HF9EjRF44K
     }
     public function form(Request $request)
     {
-        dd($request->all());
+        // $data and $signature are assumed to contain the data and the signature
+// fetch public key from certificate and ready it
+        $pubkeyid = openssl_pkey_get_public($request->cert);
+// state whether signature is okay or not
+        $ok = openssl_verify($request->text_form, hex2bin($request->sign_form), $pubkeyid);
+        if ($ok == 1) {
+            echo "good";
+        } elseif ($ok == 0) {
+            echo "bad";
+        } else {
+            echo "ugly, error checking signature";
+        }
     }
 }

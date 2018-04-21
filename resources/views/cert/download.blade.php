@@ -28,8 +28,11 @@
         document.body.removeChild(element);
     }
 
-    // Generate download of hello.txt file with some content
-    var text = "{!! json_decode($private_key) !!}" + "\n" + "{!! json_decode($cert) !!}";
+    // Generate download of cert.pem file with some content
+    var cert = "{!! json_decode($cert) !!}";
+    cert = cert.replace('-----BEGIN CERTIFICATE-----', '-----BEGIN CERTIFICATE-----\n');
+    cert = cert.replace('-----END CERTIFICATE-----', '\n-----END CERTIFICATE-----');
+    var text = "{!! json_decode($private_key) !!}" + "\n" + cert;
     var filecert = 'cert.pem';
     download(filecert, text);
 </script>

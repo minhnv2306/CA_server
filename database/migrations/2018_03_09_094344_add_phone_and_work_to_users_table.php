@@ -26,6 +26,6 @@ class AddPhoneAndWorkToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+
     }
 }
