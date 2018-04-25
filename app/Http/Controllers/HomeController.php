@@ -84,4 +84,41 @@ class HomeController extends Controller
             echo "ugly, error checking signature";
         }
     }
+
+    public function getApi($uri, $params = [])
+    {
+        $url = $uri;
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => $url,
+            CURLOPT_USERAGENT => 'cURL Request',
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => http_build_query($params)
+        ));
+        $res = curl_exec($curl);
+        curl_close($curl);
+        return $res;
+    }
+    public function getApiCheck()
+    {
+        $param['cert'] = '-----BEGIN CERTIFICATE-----
+MIICHTCCAYagAwIBAgIBATANBgkqhkiG9w0BAQUFADA4MQ0wCwYDVQQKDARIVVNU
+MRAwDgYDVQQGDAdWaWV0bmFtMRUwEwYDVQQDDAxNaW5oIE5WIENlcnQwHhcNMTgw
+NDIxMDAwMDAwWhcNMTkwNDIxMDAwMDAwWjBxMRswGQYDVQQDDBJOZ3V54buFbiBW
+xINuIE1pbmgxGjAYBgNVBAgMEUhvw6BuZyBWxINuIFRo4bulMRMwEQYDVQQGDApI
+b8OgbmcgTWFpMSEwHwYJKoZIhvcNAQkBDBJtaW5oMTEwMUBnbWFpbC5jb20wgZ8w
+DQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALRRt2QKRGko7pHuJNcaybhD4qHeVRKy
+OCVWP0mqmebs2jLdw1ZCCV3VO98OqLuc+ZuBO2fHdcD3cH5YyTUCpaKhvmYyOdqq
+VHx2WS4eEeWdRZSIqq8rkotkvdQNwIwcIgLwz6MQFO5MDMVCSjpiseb50lgm3jSD
+n/920+5oOKo1AgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAMhY+XTniEBvtQqLG0pjR
+2+Vy3UhEHrpttpxS6qyTWjvc5b3SPL1mxQF4lCuIpoT7GH37bV6hVmB8g8BSZKWH
+fj2SXJ0Ju5vU1O2j1YUTmyfbkpF139uM4BJBM/AngfTYj0UapynAw2RsMs6bpy0f
+pyQTtwsBbwtKiNYmKIjq3ao=
+-----END CERTIFICATE-----';
+        $uri = 'http://cert.local/api/v1/check-cert';
+        $homeAboutUs = self::getApi($uri, $param);
+        $data = json_decode($homeAboutUs, true);
+        dd($data);
+    }
 }

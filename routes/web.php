@@ -24,7 +24,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('my-certs', 'CertController@getMyCert')->name('certs.my-cert');
     Route::resource('certs', 'CertController');
     Route::resource('roles', 'RoleController');
-    Route::resource('objects', 'ObjectController');
     Route::get('certs/create', 'CertController@create')->name('certs.create')->middleware('can:create-cert');
     Route::post('/users/checkCreate', 'UserController@checkCreate');
     Route::get('users/role', 'UserController@roles')->name('users.roles');
@@ -50,4 +49,5 @@ Route::get('/form', function () {
 });
 Route::post('/form', 'HomeController@form');
 Route::post('/checkCert', 'CertController@checkCert');
+Route::get('get-api', 'HomeController@getApiCheck');
 
