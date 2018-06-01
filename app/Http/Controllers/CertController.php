@@ -92,6 +92,11 @@ class CertController extends Controller
 
         $endDay = $endYear . '/' . $now->month . '/' . $now->day;
         try {
+            // Get address
+            $province = Province::where('matp', $request->province_id)->first();
+            $ward = Ward::where('maqh', $request->ward_id)->first();
+            $commune = Commune::where('xaid', $request->commune_id)->first();
+
             // Create key object for CA
             $CAPrivKey = new RSA();
             $CAPrivKey->loadKey(CertController::privateKey);
@@ -114,10 +119,9 @@ class CertController extends Controller
             $subject = new X509();
             $subject->setPublicKey($pubKeySubject);
             $subject->setDNProp('cn', $request->name);
-            $subject->setDNProp('state', $request->district);
+            $subject->setDNProp('state', $ward->name);
             $subject->setDNProp('id-at-organizationName', $request->note);
-            $subject->setDNProp('countryname', $request->ward);
-            $subject->setDNProp('st', $request->city);
+            $subject->setDNProp('st', $province->name);
             $subject->setDNProp('id-emailaddress', $request->email);
             $subject->setDNProp('o', $request->organizationname);
 
@@ -142,10 +146,6 @@ class CertController extends Controller
 //            echo "\r\n";
 //            echo "<br>";
 
-            // Get address
-            $province = Province::where('matp', $request->province_id)->first();
-            $ward = Ward::where('maqh', $request->ward_id)->first();
-            $commune = Commune::where('xaid', $request->commune_id)->first();
             $cert = $x509->saveX509($result);
             Cert::create([
                 'content' => $cert,

@@ -22,7 +22,7 @@ class UserController extends Controller
             // Authentication passed...
             return redirect()->route('dashboard');
         }
-        return redirect()->back()->with('error', 'Sai sai');
+        return redirect()->back()->with('error', 'Thông tin tài khoản không chính xác');
     }
 
     public function index()

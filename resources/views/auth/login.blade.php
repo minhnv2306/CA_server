@@ -22,7 +22,11 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
-                                @if (!empty(session('error')))
+                                @if (empty(session('error')))
+                                    <span class="help-block">
+                                        <strong>OK</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
