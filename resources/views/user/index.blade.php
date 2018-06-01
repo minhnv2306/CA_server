@@ -7,7 +7,7 @@
                 Quản lý người dùng
             </h1>
             <ol class="breadcrumb">
-                <li><a href="http://cert.local/admin"><i class="fa fa-dashboard"></i> Trang chủ</a>
+                <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Trang chủ</a>
                 </li>
                 <li class="active">Quản lý người dùng</li>
             </ol>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cert;
 use App\Models\Comment;
+use App\Models\Province;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
@@ -12,6 +13,8 @@ use phpseclib\Crypt\RSA;
 use phpseclib\File\X509;
 use App\Http\Requests\CertRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Ward;
+use App\Models\Commune;
 
 class CertController extends Controller
 {
@@ -54,7 +57,15 @@ class CertController extends Controller
      */
     public function create()
     {
-        return view('cert.create');
+        $provinces = Province::get(['name', 'matp']);
+        $wards = Ward::where('matp', $provinces[0]->matp)->get();
+        $communes = Commune::where('maqh', $wards[0]->maqh)->get();
+
+        return view('cert.create', [
+            'provinces' => $provinces,
+            'wards' => $wards,
+            'communes' => $communes,
+        ]);
     }
 
     /**
@@ -130,6 +141,11 @@ class CertController extends Controller
 //            echo $privKeySubject->getPrivateKey();
 //            echo "\r\n";
 //            echo "<br>";
+
+            // Get address
+            $province = Province::where('matp', $request->province_id)->first();
+            $ward = Ward::where('maqh', $request->ward_id)->first();
+            $commune = Commune::where('xaid', $request->commune_id)->first();
             $cert = $x509->saveX509($result);
             Cert::create([
                 'content' => $cert,
@@ -139,7 +155,7 @@ class CertController extends Controller
                 'phone_number' => $request->phone_number,
                 'identification_card' => $request->identification_card,
                 'date_create_id_cart' => $request->date_create_id_cart,
-                'address' => $request->ward . ', ' . $request->district . ', ' . $request->province,
+                'address' => $commune->name . ', ' . $ward->name . ', ' . $province->name,
             ]);
             $cert = str_replace("\n","",$cert);
             $cert = str_replace("\r","",$cert);

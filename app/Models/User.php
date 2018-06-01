@@ -22,6 +22,7 @@ class User extends Authenticatable
         'role_id',
         'phone_number',
         'work',
+        'deleted_id',
     ];
 
     /**
@@ -44,6 +45,7 @@ class User extends Authenticatable
     public static function getAllUsers()
     {
         return self::orderBy('id', 'desc')
+            ->where('deleted_id', 0)
             ->get();
     }
     public function role()

@@ -89,8 +89,10 @@
                                                             <td>
                                                                 <div class="form-group">
                                                                     <select class="js-example-basic-single"
-                                                                            id="cate_product" style="width: 100%" name="province">
-                                                                        <option value="Hà Nội">Hà Nội</option>
+                                                                            id="province_id" style="width: 100%" name="province_id">
+                                                                        @foreach($provinces as $province)
+                                                                            <option value="{{$province->matp}}">{{ $province->name }}</option>
+                                                                        @endforeach
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -98,10 +100,9 @@
                                                             <td>
                                                                 <div class="form-group" id="display_products">
                                                                     <div class="form-group">
-                                                                        <select class="js-example-basic-single"
-                                                                                name="district" id="products1"
+                                                                        <select class="js-example-basic-single" id="ward_id" name="ward_id"
                                                                                 style="width: 100%">
-                                                                            <option value="Hoàng Văn Thụ">Hoàng Mai</option>
+                                                                            @include('ward.index')
                                                                         </select>
                                                                     </div>
 
@@ -110,10 +111,9 @@
                                                             <td>
                                                                 <div class="form-group" id="display_products">
                                                                     <div class="form-group">
-                                                                        <select class="js-example-basic-single"
-                                                                                name="ward" id="products1"
+                                                                        <select class="js-example-basic-single" id="commune_id" name="commune_id"
                                                                                 style="width: 100%">
-                                                                            <option value="Hoàng Mai">Hoàng Mai</option>
+                                                                            @include('commune.index')
                                                                         </select>
                                                                     </div>
 
@@ -191,6 +191,27 @@
                 });
             });
             $('.cert').addClass('active');
+
+            $('#province_id').change(function (e) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/get-wards/' + $(this).val(),
+                    success: function (data) {
+                        $('#ward_id').html(data);
+                    }
+                })
+            })
+
+
+            $('#ward_id').change(function (e) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/get-communes/' + $(this).val(),
+                    success: function (data) {
+                        $('#commune_id').html(data);
+                    }
+                })
+            })
         });
     </script>
 @endsection

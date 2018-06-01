@@ -35,11 +35,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('ca-information', 'HomeController@getCA')->name('ca');
 
+    Route::get('/get-wards/{provinceId}', 'ProvinceController@getWardOfProvince');
+    Route::get('/get-communes/{wardId}', 'ProvinceController@getCommuneOfWard');
+
 
 });
 
 Auth::routes();
-
+Route::post('login-web', 'UserController@login')->name('login-web');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/test', 'HomeController@test');

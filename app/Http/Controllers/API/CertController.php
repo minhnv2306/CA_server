@@ -17,7 +17,57 @@ class CertController extends Controller
     {
         $x509 = new X509();
         $x509->loadCA(self::certCA);
-        $x509->loadX509($request->cert);
-        return $x509->validateSignature() ? 1 : 0;
+        $cert = $x509->loadX509($request->cert);
+        if ($x509->validateSignature()) {
+            $array = [
+                'name' => $cert['tbsCertificate']['subject']['rdnSequence'][0][0]['value']['utf8String'],
+                'email' => $cert['tbsCertificate']['subject']['rdnSequence'][3][0]['value']['utf8String'],
+            ];
+            return self::successResponse($array,'Response Successfully');
+        } else {
+            return self::errorResponse([],'Cert is not found');
+        }
+    }
+
+    /**
+     * Success response
+     * @param $data
+     * @param string $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function successResponse($data, $message = '')
+    {
+        return $this->apiResponse(1, $data, $message);
+    }
+    
+    /**
+     * Error response
+     * @param $data
+     * @param $message
+     * @param int $code
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function errorResponse($data, $message, $code = 0)
+    {
+        return $this->apiResponse($code, $data, $message);
+    }
+    
+    /**
+     * Api response
+     * @param $code
+     * @param $data
+     * @param $message
+     * @param array $error
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function apiResponse($code, $data, $message, $error = [])
+    {
+        return \response()->json([
+            'result' => $code,
+            'current_time' => time(),
+            'message' => $message,
+            'data' => !empty($data) ? $data : new \stdClass(),
+            'error' => !empty($error) ? $error : new \stdClass()
+        ]);
     }
 }

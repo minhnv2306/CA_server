@@ -7,8 +7,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="http://wipro-crm.local/news/news_category"> Order</a></li>
-                <li class="active">Create new order</li>
+                <li><a href="http://wipro-crm.local/news/news_category"> Chứng thư số</a></li>
             </ol>
         </section>
         <!-- Main content -->

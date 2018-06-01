@@ -18,10 +18,10 @@ class CreateCertsTable extends Migration
             $table->text('content');
             $table->string('email')->unique();
             $table->string('customer_name');
-            $table->string('identification_card')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->string('date_create_id_cart')->nullable();
-            $table->string('address')->nullable();
+            $table->string('identification_card');
+            $table->string('phone_number');
+            $table->string('date_create_id_cart');
+            $table->string('address');
             $table->unsignedInteger('user_id');
             $table->boolean('status')->default(true);
             $table->timestamp('deleted_at')->nullable();

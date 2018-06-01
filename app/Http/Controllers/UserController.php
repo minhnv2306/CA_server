@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\NewPasswordRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,6 +14,17 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
+    public function login(LoginRequest $request)
+    {
+        $credentials = $request->only('email', 'password');
+        $credentials['deleted_id'] = 0;
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return redirect()->route('dashboard');
+        }
+        return redirect()->back()->with('error', 'Sai sai');
+    }
+
     public function index()
     {
         $users = User::getAllUsers();
@@ -82,7 +94,10 @@ class UserController extends Controller
     {
         try {
             if (Auth::user()->can('delete', $user)) {
-                $user->delete();
+                $user->update([
+                    'deleted_id' => Auth::user()->id,
+                ]);
+
                 return redirect()->back()->with('messages', 'Xóa thành công!');
             } else {
                 return view('error.403');
