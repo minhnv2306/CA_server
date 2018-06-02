@@ -40,12 +40,12 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Change user infomation</a>
+                                <a href="/profile" class="btn btn-default btn-flat"> Chỉnh sửa thông tin </a>
                             </div>
                             <div class="pull-right">
                                 <form method="POST" action="/logout">
                                     {!!  csrf_field()!!}
-                                    <button class="btn btn-default btn-flat">Log out</button>
+                                    <button class="btn btn-default btn-flat"> Đăng xuất </button>
                                 </form>
                             </div>
                         </li>
