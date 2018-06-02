@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Cert;
 use Illuminate\Http\Request;
 use phpseclib\File\X509;
 use App\Http\Controllers\Controller;
@@ -23,7 +24,15 @@ class CertController extends Controller
                 'name' => $cert['tbsCertificate']['subject']['rdnSequence'][0][0]['value']['utf8String'],
                 'email' => $cert['tbsCertificate']['subject']['rdnSequence'][3][0]['value']['utf8String'],
             ];
-            return self::successResponse($array,'Response Successfully');
+
+            $certModel = Cert::where('email', $array['email'])->first();
+            if (!empty($certModel) && $certModel->status == 1) {
+                return self::successResponse($array, 'Response Successfully');
+            } else {
+                return self::errorResponse([],'Cert have been evicted');
+            }
+
+            //return self::successResponse($array, 'Response Successfully');
         } else {
             return self::errorResponse([],'Cert is not found');
         }

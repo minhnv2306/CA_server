@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cert extends Model
 {
     protected $guarded = ['price'];
+    protected $table = 'certs1.certs';
 
     public function user()
     {
