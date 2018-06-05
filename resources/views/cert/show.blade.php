@@ -64,11 +64,20 @@
                                         <td class="width-200">Ngày cấp</td>
                                         <td class="padding-left-0"><strong>{{$cert->date_create_id_cart}} </strong></td>
                                     </tr>
-
                                     <tr class="border-hidden">
-                                        <td class="width-200">Địa chỉ</td>
+                                        <td class="width-200">Nơi cấp</td>
+                                        <td class="padding-left-0"><strong>{{$cert->where_create_id_cart}} </strong></td>
+                                    </tr>
+                                    <tr class="border-hidden">
+                                        <td class="width-200">Quê quán</td>
                                         <td class="padding-left-0"><strong>{{$cert->address}}</strong></td>
                                     </tr>
+                                    @if (!empty($cert->organizationname))
+                                    <tr class="border-hidden">
+                                        <td class="width-200">Địa chỉ làm việc</td>
+                                        <td class="padding-left-0"><strong>{{$cert->organizationname}}</strong></td>
+                                    </tr>
+                                    @endif
 
                                 </table>
                             </div>

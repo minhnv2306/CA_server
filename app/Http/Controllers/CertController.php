@@ -91,11 +91,24 @@ class CertController extends Controller
         }
 
         $endDay = $endYear . '/' . $now->month . '/' . $now->day;
+        DB::beginTransaction();
         try {
             // Get address
             $province = Province::where('matp', $request->province_id)->first();
             $ward = Ward::where('maqh', $request->ward_id)->first();
             $commune = Commune::where('xaid', $request->commune_id)->first();
+            $organizationname = empty($request->organizationname) ? '' : $request->organizationname;
+            $certModel = Cert::create([
+                'email' => $request->email,
+                'customer_name' => $request->name,
+                'user_id' => Auth::user()->id,
+                'phone_number' => $request->phone_number,
+                'identification_card' => $request->identification_card,
+                'date_create_id_cart' => $request->date_create_id_cart,
+                'where_create_id_cart' => $request->where_create_id_cart,
+                'organizationname' => $organizationname,
+                'address' => $commune->name . ', ' . $ward->name . ', ' . $province->name,
+            ]);
 
             // Create key object for CA
             $CAPrivKey = new RSA();
@@ -104,26 +117,25 @@ class CertController extends Controller
             $CApubKey = new RSA();
             $CApubKey->loadKey(CertController::publicKey);
 
-
-
             // create private key / x.509 cert for stunnel / website, subject
             $privKeySubject = new RSA();
-            extract($privKeySubject->createKey());
-            $privKeySubject->loadKey($privatekey);
+            $key = $privKeySubject->createKey();
+            $privKeySubject->loadKey($key['privatekey']);
 
             $pubKeySubject = new RSA();
-            $pubKeySubject->loadKey($publickey);
+            $pubKeySubject->loadKey($key['publickey']);
             $pubKeySubject->setPublicKey();
 
             // Subject information
             $subject = new X509();
             $subject->setPublicKey($pubKeySubject);
-            $subject->setDNProp('cn', $request->name);
-            $subject->setDNProp('state', $ward->name);
-            $subject->setDNProp('id-at-organizationName', $request->note);
-            $subject->setDNProp('st', $province->name);
-            $subject->setDNProp('id-emailaddress', $request->email);
-            $subject->setDNProp('o', $request->organizationname);
+            $subject->setDNProp('givenname', $request->name);
+            $subject->setDNProp('commonname', $commune->name);
+            $subject->setDNProp('localityname', $ward->name);
+            $subject->setDNProp('description', $request->note);
+            $subject->setDNProp('provincename', $province->name);
+            $subject->setDNProp('emailaddress', $request->email);
+            $subject->setDNProp('organizationalunitname', $request->organizationname);
 
             // Information CA
             $issuer = new X509();
@@ -136,8 +148,9 @@ class CertController extends Controller
             $x509 = new X509();
             $x509->setStartDate($startDay);
             $x509->setEndDate($endDay);
-            $x509->setSerialNumber(chr(1));
-            $privatekey = str_replace("\r","",$privatekey);
+            $x509->setSerialNumber(chr($certModel->id));
+            $x509->makeCA();
+            $privatekey = str_replace("\r","",$key['privatekey']);
             $privatekey = str_replace("\n", "", $privatekey);
             $result = $x509->sign($issuer, $subject);
 //            echo "the stunnel.pem contents are as follows:\r\n\r\n";
@@ -147,25 +160,21 @@ class CertController extends Controller
 //            echo "<br>";
 
             $cert = $x509->saveX509($result);
-            Cert::create([
-                'content' => $cert,
-                'email' => $request->email,
-                'customer_name' => $request->name,
-                'user_id' => Auth::user()->id,
-                'phone_number' => $request->phone_number,
-                'identification_card' => $request->identification_card,
-                'date_create_id_cart' => $request->date_create_id_cart,
-                'address' => $commune->name . ', ' . $ward->name . ', ' . $province->name,
+
+            $certModel->update([
+                'content' => $cert
             ]);
+
             $cert = str_replace("\n","",$cert);
             $cert = str_replace("\r","",$cert);
+            DB::commit();
             return view('cert.download', [
                 'private_key' => json_encode($privatekey),
                 'cert' => json_encode($cert)
             ]);
             //return redirect()->route('certs.index')->with('messages', 'Thêm thành công');
         } catch (Exception $e) {
-
+            DB::rollback();
             return redirect()->route('certs.index')->with('errors', 'Thêm thất bại');
         }
     }

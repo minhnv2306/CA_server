@@ -15,12 +15,14 @@ class CreateCertsTable extends Migration
     {
         Schema::create('certs', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->string('email')->unique();
             $table->string('customer_name');
             $table->string('identification_card');
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->string('date_create_id_cart');
+            $table->string('where_create_id_cart');
+            $table->string('organizationname')->nullable();
             $table->string('address');
             $table->unsignedInteger('user_id');
             $table->boolean('status')->default(true);

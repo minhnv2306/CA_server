@@ -22,7 +22,7 @@ class CertController extends Controller
         if ($x509->validateSignature()) {
             $array = [
                 'name' => $cert['tbsCertificate']['subject']['rdnSequence'][0][0]['value']['utf8String'],
-                'email' => $cert['tbsCertificate']['subject']['rdnSequence'][3][0]['value']['utf8String'],
+                'email' => $cert['tbsCertificate']['subject']['rdnSequence'][4][0]['value']['utf8String'],
             ];
 
             $certModel = Cert::where('email', $array['email'])->first();

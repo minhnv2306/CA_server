@@ -40,11 +40,11 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-sm-6">
-                                                    <label for="email">Email:</label>
+                                                    <label for="email">Email(*):</label>
                                                     <input type="email" class="form-control" name="email" value="{{old('email')}}">
                                                 </div>
                                                 <div class="form-group col-sm-6">
-                                                    <label for="email">Số điện thoại:</label>
+                                                    <label for="email">Số điện thoại(*):</label>
                                                     <input type="number" class="form-control" name="phone_number" value="{{old('phone_number')}}">
                                                 </div>
                                             </div>
@@ -64,8 +64,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-sm-4">
-                                                    <label for="email">Nơi cấp(*):</label>
-                                                    <input type="text" class="form-control" id="where_create_id_cart" required>
+                                                    <label for="where_create_id_cart">Nơi cấp(*):</label>
+                                                    <input type="text" class="form-control" id="where_create_id_cart" name="where_create_id_cart" required>
                                                 </div>
                                             </div>
 
